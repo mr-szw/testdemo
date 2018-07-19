@@ -1,4 +1,4 @@
-package com.dawei.test.demo.String;
+package com.dawei.test.demo.strings;
 
 /**
  * @author by Dawei on 2018/6/10.
