@@ -44,6 +44,9 @@ public class ShiroDemo {
         Subject subject = SecurityUtils.getSubject();
         //3、提交认证 提交认证信息
        // UsernamePasswordToken token = new UsernamePasswordToken("Dawei", "aydl");
+
+        //提交认证
+
         UsernamePasswordToken token1 = new UsernamePasswordToken("Dawei1", "aydl");
        // subject.login(token);
         subject.login(token1);
