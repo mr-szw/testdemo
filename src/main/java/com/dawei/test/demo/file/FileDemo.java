@@ -1,4 +1,4 @@
-package com.dawei.test.demo;
+package com.dawei.test.demo.file;
 
 import org.junit.Test;
 
