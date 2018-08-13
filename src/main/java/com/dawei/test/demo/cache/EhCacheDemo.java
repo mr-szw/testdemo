@@ -52,7 +52,7 @@ public class EhCacheDemo {
         localCache.put(new Element("key", "value"));
 
         System.out.println("localCache.getSize() = " + localCache.getSize());
-        System.out.println("localCache.getStatistics() = " + localCache.getStatistics().toString());
+        System.out.println("localCache.getStatistics() = " + localCache.getStatistics().getAssociatedCacheName());
         System.out.println("localCache.getName() = " + localCache.getName());
         System.out.println("localCache.get(key) = " + localCache.get("key"));
         System.out.println("localCache.get(key) = " + localCache.get("key").getObjectValue());
