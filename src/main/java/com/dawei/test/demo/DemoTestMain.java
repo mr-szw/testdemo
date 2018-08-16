@@ -1,14 +1,19 @@
 package com.dawei.test.demo;
 
+import com.dawei.test.demo.jms.QueueProducerDemo;
+
 /**
  * @author Dawei  on 2018/3/25.
  */
-public class ThreadTestMain {
+public class DemoTestMain {
 
     public static void main(String[] args) {
 
+        QueueProducerDemo.messageProducer();
+
+
         System.out.println("this Main method");
-        System.out.println(execute());
+       // System.out.println(execute());
         System.out.println("main method over");
     }
 
