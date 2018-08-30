@@ -59,8 +59,7 @@ public class ExecutorDemo {
                         e.printStackTrace();
                     }
                 });
-
-                            }else {
+            }else {
                 if(((ThreadPoolExecutor)executorService).getActiveCount() == 0) {
                     executorService.shutdown();
                     System.out.println("任务结束");
