@@ -15,6 +15,7 @@ public class StringTest {
 
 
         String teplate = "asabdb${V1}${v2}sdv${c2}";
+        System.out.println(teplate.substring(0, teplate.length() - 1));
         String temp = teplate;
         while (temp.contains("$")) {
             int length = temp.length();

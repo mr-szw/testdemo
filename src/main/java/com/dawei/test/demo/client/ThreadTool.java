@@ -1,5 +1,6 @@
 package com.dawei.test.demo.client;
 
+import com.dawei.test.demo.utils.UniqueIDUtil;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;

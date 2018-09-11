@@ -16,14 +16,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class GuavaCacheDemo {
 
-
-
     /* 静态单例对象 */
     private static GuavaCacheDemo guavaCacheDemo = null;
 
     /* 缓存 实例 */
     private LoadingCache<String, Object> loadingCache;
-
 
     /* 懒汉式 双重锁 */
     public static synchronized GuavaCacheDemo getInstance() {
@@ -41,10 +38,8 @@ public class GuavaCacheDemo {
     private GuavaCacheDemo() {
         initCacheLoading();
     }
-
     /* 初始化 缓存 */
     private void initCacheLoading() {
-
         loadingCache = CacheBuilder.newBuilder()
                 .maximumSize(10)  //最大条目数
                 .expireAfterWrite(2000L, TimeUnit.SECONDS)  //创建后的失效时间
@@ -66,7 +61,6 @@ public class GuavaCacheDemo {
                 }
         );
     }
-
 
     /* 塞值 */
     public void putValue(String key, Object value)  throws Exception {

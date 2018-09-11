@@ -16,7 +16,9 @@ import java.util.concurrent.*;
  */
 public class GuavaExecutor {
 
-
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10);
+    private ExecutorService singeleThresdPool =  Executors.newSingleThreadExecutor();
+    private ExecutorService cacheThreadPool =  Executors.newCachedThreadPool();
 
 
 
@@ -42,6 +44,9 @@ public class GuavaExecutor {
          *      by 阻塞 等待 线程执行
          */
         Boolean aBoolean = future.get();
+
+
+        CountDownLatch latch = new CountDownLatch(2);
     }
 
 
@@ -104,7 +109,7 @@ public class GuavaExecutor {
 
 
     /* 提供合并线程的 方法线程执行池*/
-    ListeningExecutorService listeningExecutorServiceFather = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
+    private ListeningExecutorService listeningExecutorServiceFather = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
     /**
      *  合并 执行结果

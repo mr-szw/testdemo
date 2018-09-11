@@ -9,6 +9,9 @@ import java.util.concurrent.*;
  */
 public class ExecutorDemo {
 
+
+    //https://blog.csdn.net/javazejian/article/details/77410889?locationNum=1&fps=1
+
     /*
      * 线程池 :
      *  固定数目的线程数：
@@ -32,7 +35,9 @@ public class ExecutorDemo {
      *              当持续阻塞任务不执行其存在降级逻辑（rejectHandler ）
     * 3、keepAliveTime 保持存活时间 即当线程数 大于 corePoolSize时 ， 那些大于线程数的那些线程将会被关闭，关闭时间有keepAliveTime 参数来控制
     * 4、unit  时间单位 keepAliveTime的时间单位
-    * 5、workQueue 仅保存由execute提交的任务队列
+    * 5、workQueue 仅保存由execute提交的任务队列 LinkedBlockingQueue 有数量限制   Synchor ArrayBlockingQueue
+    * 6、threadFactory 新线程创建方式
+    * 7、             失效策略
     *
     *
     *
