@@ -63,6 +63,7 @@ public class ThreadTool {
         }*/
         System.out.println("end");
     }
+    //@Transactional(propagation = Propagation.REQUIRED)
     public static void doRequest() {
         System.out.println("do request : " + index++);
         //String urlPath = "http://192.168.150.24/lottery/drawn";
