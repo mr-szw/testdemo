@@ -1,8 +1,7 @@
 package com.dawei.test.demo;
 
 import com.alibaba.fastjson.JSON;
-import com.dawei.test.demo.pojo.ContractMessage;
-import com.dawei.test.demo.pojo.ContractMessageBody;
+
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -69,14 +68,14 @@ public class DemoTestMain {
         String format = simpleDateFormat.format(time);
 
         String messageBody = "{\"head\":\"CONTRACT_STATUS_CHANGE\",\"body\":{\"templateType\":2,\"orderId\":1012538767323881088,\"oldSignStatus\":29,\"signStatus\":22,\"eventTime\":\"2018-11-0217:22:51\",\"contractId\":2538721084366464,\"agentName\":\"刘玲\",\"categoryId\":212}}";
-        ContractMessageBody contractMessageBody = null;
-        ContractMessage contractMessage = JSON.parseObject(messageBody, ContractMessage.class);
-        if (contractMessage != null) {
-            String head = contractMessage.getHead();
-            contractMessageBody = contractMessage.getBody();
-        }
+//        ContractMessageBody contractMessageBody = null;
+//        ContractMessage contractMessage = JSON.parseObject(messageBody, ContractMessage.class);
+//        if (contractMessage != null) {
+//            String head = contractMessage.getHead();
+//            contractMessageBody = contractMessage.getBody();
+//        }
 
-        System.out.println(JSON.toJSONString(contractMessageBody));
+//        System.out.println(JSON.toJSONString(contractMessageBody));
 
 
         //QueueProducerDemo.messageProducer();
