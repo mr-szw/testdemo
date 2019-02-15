@@ -1,5 +1,6 @@
 package com.dawei.test.demo.executor;
 
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -52,29 +53,63 @@ public class ExecutorDemo {
         //创建 固定数目的线程池
         ExecutorService executorService =
                 Executors.newFixedThreadPool(10);
-        int i = 150;
-        while (true) {
-            if(i-- > 0) {
-                executorService.execute(()-> {
-                    System.out.println("this Thread--" + Thread.currentThread().getName());
-                    System.out.println("Thread Num===" + ((ThreadPoolExecutor)executorService).getActiveCount());
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }else {
-                if(((ThreadPoolExecutor)executorService).getActiveCount() == 0) {
-                    executorService.shutdown();
-                    System.out.println("任务结束");
-                    break;
-                }
-            }
+//        int i = 150;
+//        while (true) {
+//            if(i-- > 0) {
+//                executorService.execute(()-> {
+//                    System.out.println("this Thread--" + Thread.currentThread().getName());
+//                    System.out.println("Thread Num===" + ((ThreadPoolExecutor)executorService).getActiveCount());
+//                    try {
+//                        Thread.sleep(20);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//            }else {
+//                if(((ThreadPoolExecutor)executorService).getActiveCount() == 0) {
+//                    executorService.shutdown();
+//                    System.out.println("任务结束");
+//                    break;
+//                }
+//            }
+//
+//        }
 
+
+        Future<Boolean> future =   executorService.submit(() -> {
+
+            int count = 1;
+            while (true) {
+               Thread.sleep(500);
+               System.out.println(count++);
+               if(count > 5) {
+                   return true;
+               }
+            }
+        });
+
+        long timeOut = 2 * 1000L;
+        Boolean aBoolean = null;
+        try {
+            aBoolean = future.get(timeOut, TimeUnit.MILLISECONDS);
+            System.out.println("1 aboolean-- > " + aBoolean);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            boolean interrupted = Thread.interrupted();
+            System.out.println("interrupted-- > " + interrupted);
+        }
+
+        if(future.get()) {
+            System.out.println("Success");
+        } else {
+            System.out.println("Faild");
         }
 
     }
+
+
+
+
 
 
 
