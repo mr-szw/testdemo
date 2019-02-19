@@ -1,6 +1,7 @@
 package com.dawei.test.demo.Interview;
 
 import java.util.Scanner;
+import org.junit.Test;
 
 /**
  * @author by Dawei on 2019/2/15.
@@ -10,7 +11,8 @@ import java.util.Scanner;
 public class InterviewTopic {
 
 
-    public static void main(String[] args) {
+    @Test
+    public void testMain() {
 
         //1、闰年
         //leapYear();
@@ -22,14 +24,22 @@ public class InterviewTopic {
         //fibonacci();
 
         //4、填充九宫格
-        ninePalace();
+        //ninePalace();
+
+        //5、线程通信
+        threadNotify();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
     /**
      * 1、闰年 是4的整数倍不是100 的整数倍 儿400 的整数倍是闰年
      */
-    private static void leapYear() {
+    private void leapYear() {
 
         System.out.println("输入需要校验的年份[0~3000]");
         Integer inputYear = null;
@@ -52,7 +62,7 @@ public class InterviewTopic {
     /**
      * 2、水仙花数 三位数 每个数的立方和等于这个三位数
      */
-    private static void daffodil() {
+    private void daffodil() {
         System.out.println("请输入三位数整数");
         Integer inputNum = null;
         Scanner scanner = new Scanner(System.in);
@@ -77,7 +87,7 @@ public class InterviewTopic {
     /**
      * 3、斐波那契数列
      */
-    private static void fibonacci() {
+    private void fibonacci() {
 
         System.out.println("请输入需要第几位斐波那契数");
         int inputNum;
@@ -107,7 +117,7 @@ public class InterviewTopic {
     /**
      * 4、九宫格横竖斜和相等 规律： 起始值在首行或首列的中间位置 依次左下或右上移动填充
      */
-    private static void ninePalace() {
+    private void ninePalace() {
         System.out.println("请输入需要九宫格的行数（奇数）");
         int inputNum;
         Scanner scanner = new Scanner(System.in);
@@ -167,12 +177,11 @@ public class InterviewTopic {
         for (int i = 1; i <= inputNum * inputNum; i++) {
             System.out.println("Success : Input num row = " + row + ", col = " + col + " num = " + i);
 
-
             result[row][col] = i;
             if (row == col) {
                 break;
             }
-            if(result[col][row] == 0) {
+            if (result[col][row] == 0) {
                 result[col][row] = inputNum * inputNum - i + 1;
             }
 
@@ -195,4 +204,111 @@ public class InterviewTopic {
         }
     }
 
+
+    /**
+     * 5、线程通信交替打印
+     */
+    private void threadNotify() {
+
+        Printer printer = new Printer(1);
+
+        ThreadNum threadNum = new ThreadNum(printer);
+        ThreadLetter threadLetter = new ThreadLetter(printer);
+
+        threadNum.start();
+        threadLetter.start();
+    }
+
+
+    class Printer {
+
+        private int indexNum;
+
+        public Printer(int indexNum) {
+            this.indexNum = indexNum;
+        }
+
+        public int getIndexNum() {
+            return indexNum;
+        }
+
+        public void setIndexNum(int indexNum) {
+            this.indexNum = indexNum;
+        }
+
+        public synchronized void print(int index) {
+
+            while (index % 3 == 0) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(index + " ");
+
+
+            notifyAll();
+        }
+
+        public synchronized void print(int index, String charNum) {
+
+            while (index % 3 != 0) {
+                try {
+                    notifyAll();
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println((char) (index - 1 + (int) 'A'));
+            notifyAll();
+        }
+    }
+
+    class ThreadNum extends Thread {
+
+        private Printer printer;
+
+        public ThreadNum(Printer printer) {
+            this.printer = printer;
+
+        }
+        @Override
+        public void run() {
+
+            for(int i = 1; i < 52; i++) {
+                printer.print(i);
+            }
+        }
+    }
+
+    class ThreadLetter extends Thread {
+
+        private Printer printer;
+
+        public ThreadLetter(Printer printer) {
+            this.printer = printer;
+
+        }
+        @Override
+        public void run() {
+
+            for (int i = 1; i < 52; i++) {
+                printer.print(i, "a");
+            }
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
