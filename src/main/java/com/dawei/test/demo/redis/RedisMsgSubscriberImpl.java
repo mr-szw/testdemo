@@ -23,6 +23,7 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
     @Override
     public void onMessage(String channel, String messageBody) {
         logger.info("Subscriber on message , channel={}, messageBody={}", channel, messageBody);
+        System.out.println("Subscriber on message , channel=" + channel + "  , messageBody= " + messageBody);
         super.onMessage(channel, messageBody);
     }
 
@@ -33,15 +34,19 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
      */
     @Override
     public void onSubscribe(String channel, int subscribedChannels) {
+        logger.info("on Subscribe info , channel={}, subscribedChannels={}", channel, subscribedChannels);
+        System.out.println("on Subscribe info , channel= " + channel + " , subscribedChannels=" + subscribedChannels);
+
         super.onSubscribe(channel, subscribedChannels);
     }
-
     /**
      * 取消订阅
      * @param channels 渠道
      */
     @Override
     public void unsubscribe(String... channels) {
+        logger.info("unsubscribe  info , channels={}", channels);
+        System.out.println("unsubscribe  info , channels= " + channels);
         super.unsubscribe(channels);
     }
 }

@@ -8,5 +8,5 @@ public interface RedisMsgPublisher {
 
 
 
-    Long publishMessage(String channel, String messageBody);
+    Long publishMessage(String messageBody, String ... channels);
 }
