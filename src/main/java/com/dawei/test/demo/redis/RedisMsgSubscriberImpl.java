@@ -1,5 +1,6 @@
 package com.dawei.test.demo.redis;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPubSub;
@@ -45,8 +46,8 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
      */
     @Override
     public void unsubscribe(String... channels) {
-        logger.info("unsubscribe  info , channels={}", channels);
-        System.out.println("unsubscribe  info , channels= " + channels);
+        logger.info("unsubscribe  info , channels={}", JSON.toJSONString(channels));
+        System.out.println("unsubscribe  info , channels= " + JSON.toJSONString(channels));
         super.unsubscribe(channels);
     }
 }
