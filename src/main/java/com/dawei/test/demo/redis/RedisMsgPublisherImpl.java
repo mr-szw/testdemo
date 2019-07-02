@@ -12,19 +12,14 @@ public class RedisMsgPublisherImpl implements RedisMsgPublisher{
 
     private static final Logger logger = LoggerFactory.getLogger(RedisMsgPublisherImpl.class);
 
-
     private Jedis jedis;
-
-
     public RedisMsgPublisherImpl(Jedis jedis) {
         this.jedis = jedis;
     }
-
-    public Jedis getJedis() {
+    private Jedis getJedis() {
         return jedis;
     }
-
-    public void setJedis(Jedis jedis) {
+    private void setJedis(Jedis jedis) {
         this.jedis = jedis;
     }
 
@@ -35,7 +30,6 @@ public class RedisMsgPublisherImpl implements RedisMsgPublisher{
             for (String channel : channels) {
                 Long publish = jedis.publish(channel, messageBody);
                 logger.info("Push message in channel={}, messageBody={}. result={}", channel, messageBody, publish);
-                System.out.println("Push message in channel=" + channel+ "   messageBody= " + messageBody + " . result=" + publish);
                 resultPush += publish;
             }
         }

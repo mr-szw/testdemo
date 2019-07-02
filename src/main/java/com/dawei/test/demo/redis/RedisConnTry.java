@@ -7,7 +7,7 @@ import java.util.UUID;
 public class RedisConnTry {
 
 
-    private static final String REDIS_HOST = "";
+    private static final String REDIS_HOST = "39.105.201.88";
     private static final Integer REDIS_PORT = 6379;
     private static final String[] REDIS_CHANNELS = {"Channels-1", "Channels-2"};
 
@@ -20,8 +20,8 @@ public class RedisConnTry {
         System.out.println("Jedis get abc:" + jedis.get("abc"));
         System.out.println("Jedis del abc:" + jedis.del("abc"));
 
-        //toSubscriber();
-        toPublish();
+        toSubscriber();
+        //toPublish();
     }
 
     private static void toPublish() {
@@ -40,6 +40,12 @@ public class RedisConnTry {
 
         jedis.subscribe(redisMsgSubscriber, REDIS_CHANNELS);
 
+        new Runnable(){
+            @Override
+            public void run() {
+                toPublish();
+            }
+        };
 
         try {
             Thread.sleep(10000L);
