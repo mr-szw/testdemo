@@ -3,41 +3,58 @@ package com.dawei.test.demo.threaddemo;
 /**
  * Created by Dawei on 2018/3/25.
  */
-public class ThreadTest2 {
+public class ThreadTest2 implements Runnable{
 
 
-    public static boolean flag = false;
+    private static Object object = new Object();
 
 
-    public static class ThreadOne implements Runnable {
 
-        @Override
-        public void run() {
-            if(flag) {
-                System.out.println("111");
-                flag = !flag;
-            }
-        }
+    private static volatile Boolean numFlag = true;
+
+    private TestTryDemo testTryDemo;
+    public TestTryDemo getTestTryDemo() {
+        return testTryDemo;
     }
 
-    public static class ThreadTwo implements Runnable {
-        @Override
-        public void run() {
-            if(!flag) {
-                System.out.println("2222");
-                flag = !flag;
-            }
-        }
+    public void setTestTryDemo(TestTryDemo testTryDemo) {
+        this.testTryDemo = testTryDemo;
     }
 
-    public static void main(String[] args) throws InterruptedException{
-        Thread thread1 = new Thread(new ThreadOne());
-        Thread thread2 = new Thread(new ThreadTwo());
-        thread1.start();
-        thread2.start();
+    public ThreadTest2(TestTryDemo testTryDemo) {
+        this.testTryDemo = testTryDemo;
+    }
 
-        Thread.sleep(1000);
-        thread1.interrupt();
-        thread2.interrupt();
+    /**
+     * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes the object's
+     * <code>run</code> method to be called in that separately executing
+     * thread.
+     * <p>
+     * The general contract of the method <code>run</code> is that it may take any action whatsoever.
+     *
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+        synchronized (object) {
+            Integer countNum = testTryDemo.getCountNum();
+            while (countNum <= 26) {
+                countNum++;
+                testTryDemo.setCountNum(countNum);
+                if(numFlag) {
+                    System.out.println("Letters is  = " + ((char) (countNum % 26 + (int) 'A')));
+                    if(countNum % 3 == 0){
+                        numFlag = false;
+                        object.notifyAll();
+                    }
+                } else {
+                    try {
+                        object.wait();
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }

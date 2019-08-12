@@ -116,7 +116,7 @@ public class GuavaExecutor {
      *
      *  对多个线程的执行结果 进行合并操作
      */
-    public void MerageExecutorResult() throws Exception{
+    public void merageExecutorResult() throws Exception{
 
         /* 子任务线程-1 */
         ListenableFuture<Long> longListenableFuture1 = listeningExecutorServiceFather.submit(() -> {
@@ -130,8 +130,8 @@ public class GuavaExecutor {
             Thread.sleep(1000);
             System.out.println("This work -------------- > 2");
             //让任务二 发生异常
-           // throw new RuntimeException("Work Exception ----------- > work-2 ");
-            return 2L;
+           throw new RuntimeException("Work Exception ----------- > work-2 ");
+            //return 2L;
         });
 
 
@@ -140,7 +140,8 @@ public class GuavaExecutor {
         *    若存在一个失败的任务 则返回失败或取消
         *
         * */
-        ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
+        //ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
+        ListenableFuture<List<Long>> mergeFuture = Futures.successfulAsList(longListenableFuture1, longListenableFuture2);
 
         
         /*

@@ -7,7 +7,7 @@ import java.util.UUID;
 public class RedisConnTry {
 
 
-    private static final String REDIS_HOST = "39.105.201.88";
+    private static final String REDIS_HOST = "";
     private static final Integer REDIS_PORT = 6379;
     private static final String[] REDIS_CHANNELS = {"Channels-1", "Channels-2"};
 
