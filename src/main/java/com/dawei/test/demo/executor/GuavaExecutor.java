@@ -1,6 +1,7 @@
 package com.dawei.test.demo.executor;
 
 import com.google.common.util.concurrent.*;
+import java.io.Serializable;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
@@ -116,7 +117,7 @@ public class GuavaExecutor {
      *
      *  对多个线程的执行结果 进行合并操作
      */
-    public void merageExecutorResult() throws Exception{
+    public void merageExecutorResult() {
 
         /* 子任务线程-1 */
         ListenableFuture<Long> longListenableFuture1 = listeningExecutorServiceFather.submit(() -> {
@@ -125,7 +126,7 @@ public class GuavaExecutor {
             return 1L;
         });
 
-        /* 子任务线程-1 */
+        /* 子任务线程-2 */
         ListenableFuture<Long> longListenableFuture2 = listeningExecutorServiceFather.submit(() -> {
             Thread.sleep(1000);
             System.out.println("This work -------------- > 2");
@@ -137,10 +138,11 @@ public class GuavaExecutor {
 
         /* 合并 任外务返回监控
         *    当多个任务皆成功返回则返回 一个longListenableFuture 的List 对象
-        *    若存在一个失败的任务 则返回失败或取消
-        *
+        *    allAsList 若存在一个失败的任务 则返回失败或取消
+        *    successfulAsList 将成功的返回 不成功的返回null
         * */
         //ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
+
         ListenableFuture<List<Long>> mergeFuture = Futures.successfulAsList(longListenableFuture1, longListenableFuture2);
 
         
