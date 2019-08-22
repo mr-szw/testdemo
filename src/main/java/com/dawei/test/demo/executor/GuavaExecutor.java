@@ -1,7 +1,6 @@
 package com.dawei.test.demo.executor;
 
 import com.google.common.util.concurrent.*;
-import java.io.Serializable;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
@@ -126,13 +125,13 @@ public class GuavaExecutor {
             return 1L;
         });
 
-        /* 子任务线程-2 */
+        /* 子任务线程-1 */
         ListenableFuture<Long> longListenableFuture2 = listeningExecutorServiceFather.submit(() -> {
             Thread.sleep(1000);
             System.out.println("This work -------------- > 2");
             //让任务二 发生异常
-           throw new RuntimeException("Work Exception ----------- > work-2 ");
-            //return 2L;
+           // throw new RuntimeException("Work Exception ----------- > work-2 ");
+            return 2L;
         });
 
 

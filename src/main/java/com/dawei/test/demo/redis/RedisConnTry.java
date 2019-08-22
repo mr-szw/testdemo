@@ -1,11 +1,16 @@
 package com.dawei.test.demo.redis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RedisConnTry {
 
+    private static final Logger logger = LoggerFactory.getLogger(RedisConnTry.class);
 
     private static final String REDIS_HOST = "";
     private static final Integer REDIS_PORT = 6379;
