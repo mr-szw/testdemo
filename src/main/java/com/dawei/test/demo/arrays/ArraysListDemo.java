@@ -2,6 +2,7 @@ package com.dawei.test.demo.arrays;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class ArraysListDemo {
         for(int i = 6; i <= 10; i++) {
             list2.add(i);
         }
+        Collections.reverse(list1);
 
         List<Integer> list = new ArrayList<>(list1);
         list.addAll(list2);
