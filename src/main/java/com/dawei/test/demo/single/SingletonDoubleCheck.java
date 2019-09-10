@@ -11,16 +11,16 @@ package com.dawei.test.demo.single;
  */
 public class SingletonDoubleCheck {
 
-    private static SingletonDoubleCheck instance;
+    private static volatile SingletonClass instance;
 
     private SingletonDoubleCheck() {
     }
 
-    public static SingletonDoubleCheck getInstance() {
+    public static SingletonClass getInstance() {
         if (instance == null) {
             synchronized (SingletonDoubleCheck.class) {
                 if (instance == null) {
-                    instance = new SingletonDoubleCheck();
+                    instance = new SingletonClass();
                 }
             }
         }
