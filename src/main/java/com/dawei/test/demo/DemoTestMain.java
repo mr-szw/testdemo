@@ -1,11 +1,14 @@
 package com.dawei.test.demo;
 
 import com.alibaba.fastjson.JSON;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.junit.Test;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.StringUtils;
 
 /**
  * @author Dawei  on 2018/3/25.
@@ -47,59 +50,83 @@ public class DemoTestMain {
     public void madin() {
 
 
-        LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
-
-        linkedHashMap.put("a", "as");
-        linkedHashMap.put("b", "as");
-
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            Date parse = simpleDateFormat.parse("0000-00-00 00:00:00");
-            System.out.println(parse);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        List<Integer> workerListAll = new ArrayList<>();
-        for(int i= 0; i< 30; i++) {
-            workerListAll.add(i);
-        }
-
-        Object k = 6;
-        System.out.println(((6) ^ (k.hashCode() >>> 16)));
-        HashMap<String, String> resultMap = new HashMap<>();
-        resultMap.put("1", "2");
-
-
-
-        int pageSize = 30;
-        int pageNo = 0;
-        int size = workerListAll.size();
-
-        while (size > pageNo) {
-            try {
-                List<Integer> workerListTemp = new ArrayList<>();
-                if (size > (pageNo + 30)) {
-                    workerListTemp = workerListAll.subList(pageNo, pageNo + 30);
-                } else {
-                    workerListTemp = workerListAll.subList(pageNo, size);
-                }
-                pageNo += pageSize;
-                System.out.println(JSON.toJSONString(workerListTemp));
-            } catch (Exception e) {
-
+        String serviceStartTime = "06:00";
+        String serviceEndTime = "12:00";
+        if (!StringUtils.isEmpty(serviceStartTime) && !StringUtils.isEmpty(serviceEndTime)) {
+            //服务时间段 -- 决定住家白班钟点工
+            // A.选择的时间段小于8小时，则将原来的都可以展示成钟点工；
+            //B.选择的时间段大于等于8小时，则将原来的都可以展示成白班；
+            Integer startTime = Integer.valueOf(serviceStartTime.substring(0, serviceStartTime.indexOf(":")));
+            Integer endTime = Integer.valueOf(serviceEndTime.substring(0, serviceEndTime.indexOf(":")));
+            int count = endTime - startTime;
+            if (count >= 8) {
+                System.out.println("jobDtoJobType = NannyTypeEnum.DAY.getCode();");
+            } else {
+                System.out.println("jobDtoJobType = NannyTypeEnum.HOUR.getCode();");
             }
-
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            System.out.println(dateFormat.parse("2000-01-01 00:00:00").getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(new Date(946656000000L));
+        Integer housingArea = 14;
+        housingArea = (int) Math.round(housingArea/10D) * 10 ;
+        System.out.println(housingArea);
+
+
+
+//
+//
+//        LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
+//
+//        linkedHashMap.put("a", "as");
+//        linkedHashMap.put("b", "as");
+//
+//
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        try {
+//            Date parse = simpleDateFormat.parse("0000-00-00 00:00:00");
+//            System.out.println(parse);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        List<Integer> workerListAll = new ArrayList<>();
+//        for(int i= 0; i< 30; i++) {
+//            workerListAll.add(i);
+//        }
+//
+//        Object k = 6;
+//        System.out.println(((6) ^ (k.hashCode() >>> 16)));
+//        HashMap<String, String> resultMap = new HashMap<>();
+//        resultMap.put("1", "2");
+//
+//
+//
+//        int pageSize = 30;
+//        int pageNo = 0;
+//        int size = workerListAll.size();
+//
+//        while (size > pageNo) {
+//            try {
+//                List<Integer> workerListTemp = new ArrayList<>();
+//                if (size > (pageNo + 30)) {
+//                    workerListTemp = workerListAll.subList(pageNo, pageNo + 30);
+//                } else {
+//                    workerListTemp = workerListAll.subList(pageNo, size);
+//                }
+//                pageNo += pageSize;
+//                System.out.println(JSON.toJSONString(workerListTemp));
+//            } catch (Exception e) {
+//
+//            }
+//
+//        }
+//
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            System.out.println(dateFormat.parse("2000-01-01 00:00:00").getTime());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(new Date(946656000000L));
 //        int[] nums = {2, 2, 2, 2};
 //        //System.out.println(new Solution().removeDuplicates(nums));
 //
@@ -199,4 +226,14 @@ public class DemoTestMain {
         }
     }
 
+    /**
+     * 1000ms * 2 2s
+     *
+     *
+     *
+     */
+    @Scheduled(fixedDelay = 1000 * 2)
+    private void scheduleFixedDelay() {
+
+    }
 }
