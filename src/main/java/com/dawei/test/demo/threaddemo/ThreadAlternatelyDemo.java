@@ -13,7 +13,7 @@ public class ThreadAlternatelyDemo {
 
     //用于做锁的对象
     private static final Object object = new Object();
-    //
+    //执行标识 可以控制执行顺序因为不存在并发写的情况所以 不用考虑这个字段的并发问题
     private static boolean flag = false;
 
 
@@ -29,7 +29,6 @@ public class ThreadAlternatelyDemo {
                 }
             }
         });
-
 
         Thread thread2 = new Thread(() -> {
 
