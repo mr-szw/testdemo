@@ -22,6 +22,20 @@ public class HystrixTestDemo extends HystrixCommand<List<String>> {
     public HystrixTestDemo(String parameterName) {
 
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(COMMAND_GROUP_KEY))//提交分组
+<<<<<<< HEAD
+                        .andCommandKey(HystrixCommandKey.Factory.asKey(COMMAND_KEY))
+                        .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
+                                .withKeepAliveTimeMinutes(EXECUTION_TIMEOUT_MILLISECONDS)  //线程配置保持连接时长
+                                .withCoreSize(4) //核心线程数
+                        )
+                        .andCommandPropertiesDefaults(HystrixCommandProperties.defaultSetter()
+                                .withExecutionTimeoutInMilliseconds(EXECUTION_TIMEOUT_MILLISECONDS)
+                                .withCircuitBreakerEnabled(true)     //是否允许熔断，默认允许；
+                                .withCircuitBreakerRequestVolumeThreshold(5)  //熔断器是否开启的阀值，也就是说单位时间超过了阀值请求数，熔断器才开 十秒内請求超过5个
+                                .withCircuitBreakerErrorThresholdPercentage(50) //错误比例触发熔断： 失败50%的情况下
+                                .withCircuitBreakerSleepWindowInMilliseconds(1000)  //熔断器默认工作时间，超过此时间会进入半开状态，即允许流量做尝试；熔断1000ms
+                        )
+=======
                 .andCommandKey(HystrixCommandKey.Factory.asKey(COMMAND_KEY))
                 .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
                         .withKeepAliveTimeMinutes(EXECUTION_TIMEOUT_MILLISECONDS)  //线程配置保持连接时长
@@ -33,6 +47,7 @@ public class HystrixTestDemo extends HystrixCommand<List<String>> {
                         .withCircuitBreakerErrorThresholdPercentage(50) // 失败50%的情况下
                         .withCircuitBreakerSleepWindowInMilliseconds(1000)  //熔断1000ms
                 )
+>>>>>>> master
         );
         //业务处理参数
         this.parameterName = parameterName;

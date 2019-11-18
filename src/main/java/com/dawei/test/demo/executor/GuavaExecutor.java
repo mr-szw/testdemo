@@ -113,7 +113,11 @@ public class GuavaExecutor {
      * <p>
      * 对多个线程的执行结果 进行合并操作
      */
+<<<<<<< HEAD
+    public void merageExecutorResult() {
+=======
     public void MerageExecutorResult() throws Exception {
+>>>>>>> master
 
         /* 子任务线程-1 */
         ListenableFuture<Long> longListenableFuture1 = listeningExecutorServiceFather.submit(() -> {
@@ -133,11 +137,21 @@ public class GuavaExecutor {
 
 
         /* 合并 任外务返回监控
+<<<<<<< HEAD
+        *    当多个任务皆成功返回则返回 一个longListenableFuture 的List 对象
+        *    allAsList 若存在一个失败的任务 则返回失败或取消
+        *    successfulAsList 将成功的返回 不成功的返回null
+        * */
+        //ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
+
+        ListenableFuture<List<Long>> mergeFuture = Futures.successfulAsList(longListenableFuture1, longListenableFuture2);
+=======
          *    当多个任务皆成功返回则返回 一个longListenableFuture 的List 对象
          *    若存在一个失败的任务 则返回失败或取消
          *
          * */
         ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
+>>>>>>> master
 
 
         /*
