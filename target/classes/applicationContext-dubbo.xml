@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:property-placeholder location="classpath*:dubbo.properties"/>
+
+    <!-- 应用名 -->
+    <dubbo:application name="dubbo-consumer"/>
+
+    <dubbo:registry address="zookeeper://192.168.150.22:2181" group="lottery_dubbo_group" id="dubbo_cus"/>
+
+    <dubbo:reference id="testService" interface="com.dawei.graduation.lottery.service.TestService" version="1.0.0"
+                     registry="dubbo_cus"/>
+
+    <dubbo:reference id="lotteryDeliveryService" interface="com.dawei.graduation.lottery.service.LotteryDeliveryService"
+                     version="1.0.0" registry="dubbo_cus"/>
+    <!--<dubbo:reference interface="com.dubbo.text.service.TestMethod" registry="dubbo_cus" version="1.0.0" id="testMethod" />
+-->
+</beans>
