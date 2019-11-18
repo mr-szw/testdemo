@@ -6,7 +6,5 @@ package com.dawei.test.demo.redis;
 public interface RedisMsgPublisher {
 
 
-
-
-    Long publishMessage(String messageBody, String ... channels);
+    Long publishMessage(String messageBody, String... channels);
 }

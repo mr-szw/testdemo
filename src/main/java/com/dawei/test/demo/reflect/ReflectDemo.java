@@ -13,10 +13,10 @@ import java.util.Date;
 public class ReflectDemo {
 
     /*
-    *
-    * JVM装在类的时候使用“全盘负责委托原则”，当一个ClassLoader装载一个类的时候这个类的引用类和依赖类都将由这个类加载器加载，除非有显式地指定了另一个ClassLoader
-    * 委托机制 即先委托父装载器先寻找类目标，当其找不到时再从自己的 类路径下查找并装载目标类。
-    * */
+     *
+     * JVM装在类的时候使用“全盘负责委托原则”，当一个ClassLoader装载一个类的时候这个类的引用类和依赖类都将由这个类加载器加载，除非有显式地指定了另一个ClassLoader
+     * 委托机制 即先委托父装载器先寻找类目标，当其找不到时再从自己的 类路径下查找并装载目标类。
+     * */
 
     public static void main(String[] args) {
 
@@ -24,10 +24,10 @@ public class ReflectDemo {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         /* 类加载器：
-        *       AppClassLoader 加载ClassPath下的类 是ClassLoader的子类
-        *       ExtClassLoader 加载 jre之外的扩展类 例如：引入的JAR中的类 是ClassLoader的子类
-        *       根装载器 加载 jre中的类 是C++语言编写 java中看不见
-        */
+         *       AppClassLoader 加载ClassPath下的类 是ClassLoader的子类
+         *       ExtClassLoader 加载 jre之外的扩展类 例如：引入的JAR中的类 是ClassLoader的子类
+         *       根装载器 加载 jre中的类 是C++语言编写 java中看不见
+         */
         /* 当前类的加载器 */
         System.out.println("Curent classLoader:=> " + classLoader);
         /* 加载当前类加载器的加载器 */
@@ -45,7 +45,7 @@ public class ReflectDemo {
 
         //2、获取类的默认构造器对象 并用它实例化实体对象
         DemoPojo demoPojo = null;
-        if(clazz != null) {
+        if (clazz != null) {
             try {
                 //3、通过类类型获取无参构造器
                 Constructor<?> declaredConstructor = clazz.getDeclaredConstructor();
@@ -73,7 +73,6 @@ public class ReflectDemo {
 
             System.out.println(demoPojo.toString());
         }
-
 
 
     }

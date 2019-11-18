@@ -18,7 +18,7 @@ public class GuavaDemo {
 
 
     public static void main(String[] args) {
-        List<String> list = Lists.newArrayList("asa","123", "asa", "454", "sdsd", "45");
+        List<String> list = Lists.newArrayList("asa", "123", "asa", "454", "sdsd", "45");
 //        CharMatcher.
         //Multimap<String, String> multimap  =
         //Joiner.on("&").withKeyValueSeparator("?").join()/**/
@@ -35,10 +35,10 @@ public class GuavaDemo {
 
 
         Set<Integer> set = Sets.newHashSet();
-        for(int i = 5; i < 10; i++) {
+        for (int i = 5; i < 10; i++) {
             set.add(i);
         }
-        for(int i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++) {
             set.add(i);
         }
 

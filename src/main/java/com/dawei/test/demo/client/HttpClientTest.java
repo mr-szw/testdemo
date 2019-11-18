@@ -12,8 +12,4 @@ public class HttpClientTest {
     public static final Logger logger = LoggerFactory.getLogger(HttpClientTest.class);
 
 
-
-
-
-
 }

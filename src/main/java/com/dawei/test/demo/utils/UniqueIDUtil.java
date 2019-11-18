@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +57,8 @@ public class UniqueIDUtil {
     // unique id generate task
     private static Callable<Integer> uidGenerateTask = new Callable<Integer>() {
 
-        @Override public Integer call() {
+        @Override
+        public Integer call() {
 
             if (UniqueIDUtil.uniqueIdQueue.size() < UniqueIDUtil.sizeDivide) {
 
@@ -149,8 +151,7 @@ public class UniqueIDUtil {
         long destID = System.currentTimeMillis() - UniqueID_BEGIN_TIME;
         if (destID <= CURRENT_MILLIS) {
             destID = ++CURRENT_MILLIS;
-        }
-        else {
+        } else {
             CURRENT_MILLIS = destID;
         }
 

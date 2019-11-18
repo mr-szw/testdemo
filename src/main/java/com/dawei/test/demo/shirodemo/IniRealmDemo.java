@@ -14,7 +14,6 @@ import org.junit.Test;
 public class IniRealmDemo {
 
 
-
     @Test
     public void iniRealmTest() {
         IniRealm iniRealm = new IniRealm("classpath:shiro/iniShiro.ini");
@@ -31,7 +30,7 @@ public class IniRealmDemo {
         Subject subject = SecurityUtils.getSubject();
         //3、提交认证 提交认证信息
         UsernamePasswordToken token = new UsernamePasswordToken("Dawei", "aydl");
-         subject.login(token);
+        subject.login(token);
         //判断认证结果
         System.out.println("isAuthenticated : " + subject.isAuthenticated());
 
@@ -40,9 +39,6 @@ public class IniRealmDemo {
         subject.checkRole("guest");
         //授予权限是否包含 某种权限
         subject.checkPermission("user:see");
-
-
-
 
 
     }

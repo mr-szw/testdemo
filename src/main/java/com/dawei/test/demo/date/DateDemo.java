@@ -16,7 +16,6 @@ public class DateDemo {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
-
         Date date = new Date(1525335058000L);
         System.out.println(date.toString());
         System.out.println(" currentTimeMillis" + System.currentTimeMillis());

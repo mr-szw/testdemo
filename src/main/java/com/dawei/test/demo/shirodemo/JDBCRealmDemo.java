@@ -2,6 +2,7 @@ package com.dawei.test.demo.shirodemo;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.DefaultSecurityManager;
@@ -15,6 +16,7 @@ import org.junit.Test;
 public class JDBCRealmDemo {
 
     private DruidDataSource druidDataSource = new DruidDataSource();
+
     {
 
         druidDataSource.setUrl("");
@@ -51,7 +53,7 @@ public class JDBCRealmDemo {
         Subject subject = SecurityUtils.getSubject();
         //3、提交认证 提交认证信息
         UsernamePasswordToken token = new UsernamePasswordToken("Dawei", "aydl");
-         subject.login(token);
+        subject.login(token);
         //判断认证结果
         System.out.println("isAuthenticated : " + subject.isAuthenticated());
 
@@ -60,9 +62,6 @@ public class JDBCRealmDemo {
         subject.checkRole("guest");
         //授予权限是否包含 某种权限
         subject.checkPermission("user:see");
-
-
-
 
 
     }

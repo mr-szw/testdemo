@@ -12,12 +12,11 @@ public class StringTest {
     public static void main(String[] args) {
 
 
-
         String str = "你想説些生麽#$#就説寫生麽吧";
         String[] result = str.split("#\\$#");
         str = "";
         String[] split = str.split(",");
-        for(String s : split) {
+        for (String s : split) {
             System.out.println(s);
         }
         String[] strs = new String[1];
@@ -37,10 +36,9 @@ public class StringTest {
             int j = temp.indexOf("}");
             String substring = temp.substring(i + 2, j);
             System.out.println(("i   " + i + "   j  " + j + "  sub=" + substring));
-            temp = temp.substring(j+1, length);
+            temp = temp.substring(j + 1, length);
 
         }
-
 
 
     }

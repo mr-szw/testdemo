@@ -1,11 +1,12 @@
 package com.dawei.test.demo.Interview;
 
 import java.util.Scanner;
+
 import org.junit.Test;
 
 /**
  * @author by Dawei on 2019/2/15.
- *
+ * <p>
  * 经典题目100列
  */
 public class InterviewTopic {
@@ -274,10 +275,11 @@ public class InterviewTopic {
             this.printer = printer;
 
         }
+
         @Override
         public void run() {
 
-            for(int i = 1; i < 52; i++) {
+            for (int i = 1; i < 52; i++) {
                 printer.print(i);
             }
         }
@@ -291,6 +293,7 @@ public class InterviewTopic {
             this.printer = printer;
 
         }
+
         @Override
         public void run() {
 

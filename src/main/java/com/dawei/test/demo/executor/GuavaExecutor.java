@@ -1,25 +1,26 @@
 package com.dawei.test.demo.executor;
 
 import com.google.common.util.concurrent.*;
+
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
 /**
  * @author by Dawei on 2018/8/13.
- *
+ * <p>
  * google 对Java的线程进行封装
  * 提供了对执行任务的Callable 做监听回调
  */
 public class GuavaExecutor {
 
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10);
-    private ExecutorService singeleThresdPool =  Executors.newSingleThreadExecutor();
-    private ExecutorService cacheThreadPool =  Executors.newCachedThreadPool();
-
+    private ExecutorService singeleThresdPool = Executors.newSingleThreadExecutor();
+    private ExecutorService cacheThreadPool = Executors.newCachedThreadPool();
 
 
     /* 原始的 可获取执行结果的JDK 线程池 */
@@ -48,7 +49,6 @@ public class GuavaExecutor {
 
         CountDownLatch latch = new CountDownLatch(2);
     }
-
 
 
     /* 做监听的 线程池 线程执行完成后 主动触发响应事件 */
@@ -105,18 +105,15 @@ public class GuavaExecutor {
     }
 
 
-
-
-
     /* 提供合并线程的 方法线程执行池*/
     private ListeningExecutorService listeningExecutorServiceFather = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
     /**
-     *  合并 执行结果
-     *
-     *  对多个线程的执行结果 进行合并操作
+     * 合并 执行结果
+     * <p>
+     * 对多个线程的执行结果 进行合并操作
      */
-    public void MerageExecutorResult() throws Exception{
+    public void MerageExecutorResult() throws Exception {
 
         /* 子任务线程-1 */
         ListenableFuture<Long> longListenableFuture1 = listeningExecutorServiceFather.submit(() -> {
@@ -130,23 +127,23 @@ public class GuavaExecutor {
             Thread.sleep(1000);
             System.out.println("This work -------------- > 2");
             //让任务二 发生异常
-           // throw new RuntimeException("Work Exception ----------- > work-2 ");
+            // throw new RuntimeException("Work Exception ----------- > work-2 ");
             return 2L;
         });
 
 
         /* 合并 任外务返回监控
-        *    当多个任务皆成功返回则返回 一个longListenableFuture 的List 对象
-        *    若存在一个失败的任务 则返回失败或取消
-        *
-        * */
+         *    当多个任务皆成功返回则返回 一个longListenableFuture 的List 对象
+         *    若存在一个失败的任务 则返回失败或取消
+         *
+         * */
         ListenableFuture<List<Long>> mergeFuture = Futures.allAsList(longListenableFuture1, longListenableFuture2);
 
-        
+
         /*
-        * 
-        * 对合并的任务进行继续处理
-        * */
+         *
+         * 对合并的任务进行继续处理
+         * */
         final ListenableFuture<String> transformAsyncFuture = Futures.transformAsync(mergeFuture, new AsyncFunction<List<Long>, String>() {
             /**
              * Returns an output {@code Future} to use in place of the given {@code input}. The output {@code
@@ -159,7 +156,7 @@ public class GuavaExecutor {
              */
             @Override
             public ListenableFuture<String> apply(@Nullable List<Long> input) throws Exception {
-                if(!CollectionUtils.isEmpty(input)){
+                if (!CollectionUtils.isEmpty(input)) {
                     System.out.println(Arrays.toString(input.toArray()));
                 }
                 return Futures.immediateFuture("合并后的统一任务执行成功-----");
@@ -173,17 +170,6 @@ public class GuavaExecutor {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     /* 回调函数 实现体 */
     class DoFutureCallBackImpl implements FutureCallback<Object> {
         /**
@@ -193,7 +179,7 @@ public class GuavaExecutor {
          */
         @Override
         public void onSuccess(@Nullable Object result) {
-            System.out.println("SuccessFully"  + result);
+            System.out.println("SuccessFully" + result);
         }
 
         /**
@@ -206,7 +192,7 @@ public class GuavaExecutor {
          */
         @Override
         public void onFailure(Throwable t) {
-            System.out.println("onFailure  + t=" +  t);
+            System.out.println("onFailure  + t=" + t);
 
         }
     }

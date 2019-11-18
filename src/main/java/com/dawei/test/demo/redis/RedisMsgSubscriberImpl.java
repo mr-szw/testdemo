@@ -2,6 +2,7 @@ package com.dawei.test.demo.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import redis.clients.jedis.JedisPubSub;
 
 /**
@@ -17,7 +18,8 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
 
     /**
      * 订阅了相关信息，接收到订阅就回去调用
-     * @param channel 渠道|频道
+     *
+     * @param channel     渠道|频道
      * @param messageBody 消息内容
      */
     @Override
@@ -29,7 +31,8 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
 
     /**
      * 订阅后会接受到调用
-     * @param channel 渠道
+     *
+     * @param channel            渠道
      * @param subscribedChannels 订阅数目
      */
     @Override
@@ -39,8 +42,10 @@ public class RedisMsgSubscriberImpl extends JedisPubSub {
 
         super.onSubscribe(channel, subscribedChannels);
     }
+
     /**
      * 取消订阅
+     *
      * @param channels 渠道
      */
     @Override

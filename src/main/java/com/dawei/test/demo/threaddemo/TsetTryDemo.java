@@ -19,7 +19,7 @@ public class TsetTryDemo {
         Thread thread = new Thread(() -> {
             try {
                 int i = 0;
-                while ( i < 1001){
+                while (i < 1001) {
                     System.out.println("+   i=" + i);
                     Thread.sleep(500);
                     i += 500;
@@ -41,7 +41,7 @@ public class TsetTryDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(thread.isAlive()) {
+        if (thread.isAlive()) {
             System.out.println("Alive");
             //结束掉
             thread.interrupt();
@@ -55,7 +55,6 @@ public class TsetTryDemo {
             e.printStackTrace();
         }
     }
-
 
 
 }

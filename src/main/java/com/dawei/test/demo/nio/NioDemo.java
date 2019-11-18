@@ -8,9 +8,9 @@ import java.nio.channels.FileChannel;
 
 /**
  * @author by Dawei on  2018/8/15.
- *
+ * <p>
  * 了解NIO 实现原理与运行过程
- *      NIO 多路复用器
+ * NIO 多路复用器
  */
 public class NioDemo {
 
@@ -19,8 +19,8 @@ public class NioDemo {
     public static void simpleIOMethod(String sourceFilePath, String destFilePath) throws IOException {
         File sourceFile = new File(sourceFilePath);
         File descFile = new File(destFilePath);
-        if(!descFile.exists()) {
-            boolean newFileResult  = descFile.createNewFile();
+        if (!descFile.exists()) {
+            boolean newFileResult = descFile.createNewFile();
             System.out.println("descFile.createNewFile result: " + newFileResult);
         }
 
@@ -42,8 +42,8 @@ public class NioDemo {
     public static void nioMethod(String sourceFilePath, String destFilePath) throws IOException {
         File sourceFile = new File(sourceFilePath);
         File descFile = new File(destFilePath);
-        if(!descFile.exists()) {
-            boolean newFileResult  = descFile.createNewFile();
+        if (!descFile.exists()) {
+            boolean newFileResult = descFile.createNewFile();
             System.out.println("descFile.createNewFile result: " + newFileResult);
         }
 
@@ -60,11 +60,6 @@ public class NioDemo {
         fileInputStream.close();
 
     }
-
-
-
-
-
 
 
 }

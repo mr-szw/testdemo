@@ -13,7 +13,7 @@ public class ThreadTest2 {
 
         @Override
         public void run() {
-            if(flag) {
+            if (flag) {
                 System.out.println("111");
                 flag = !flag;
             }
@@ -23,14 +23,14 @@ public class ThreadTest2 {
     public static class ThreadTwo implements Runnable {
         @Override
         public void run() {
-            if(!flag) {
+            if (!flag) {
                 System.out.println("2222");
                 flag = !flag;
             }
         }
     }
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         Thread thread1 = new Thread(new ThreadOne());
         Thread thread2 = new Thread(new ThreadTwo());
         thread1.start();

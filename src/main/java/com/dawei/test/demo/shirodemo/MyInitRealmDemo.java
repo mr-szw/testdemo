@@ -16,8 +16,7 @@ import java.util.Set;
  * @author by Dawei on 2018/7/20.
  * 自定义Realm
  */
-public class MyInitRealmDemo  extends AuthorizingRealm {
-
+public class MyInitRealmDemo extends AuthorizingRealm {
 
 
     /* 做授权 */
@@ -49,9 +48,6 @@ public class MyInitRealmDemo  extends AuthorizingRealm {
         //2、通过用户名获取认证凭证信息
         //自定义的凭证获取方式 自定义的数据源
         String token = "";
-
-
-
 
 
         return new SimpleAuthenticationInfo("Dawei", token, "myInitRealm");

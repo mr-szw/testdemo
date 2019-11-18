@@ -14,13 +14,13 @@ public class ForOrIf {
         List<Integer> list = new ArrayList<>();
         List<Integer> list1 = new ArrayList<>();
 
-        for(int i = 0; i < 50; i++ ){
+        for (int i = 0; i < 50; i++) {
             list.add(i);
         }
 
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
 
-            for(int j = i; j < list.size(); j = j + 5) {
+            for (int j = i; j < list.size(); j = j + 5) {
                 list1.add(list.get(j));
             }
         }

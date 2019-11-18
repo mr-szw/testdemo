@@ -25,6 +25,7 @@ public class ShiroDemo {
         // 参数3 添加授权参数
         simpleAccountRealm.addAccount("Dawei1", "aydl", "admin");
     }
+
     @Test
     public void testMethod() {
 
@@ -43,12 +44,12 @@ public class ShiroDemo {
         SecurityUtils.setSecurityManager(defaultSecurityManager);
         Subject subject = SecurityUtils.getSubject();
         //3、提交认证 提交认证信息
-       // UsernamePasswordToken token = new UsernamePasswordToken("Dawei", "aydl");
+        // UsernamePasswordToken token = new UsernamePasswordToken("Dawei", "aydl");
 
         //提交认证
 
         UsernamePasswordToken token1 = new UsernamePasswordToken("Dawei1", "aydl");
-       // subject.login(token);
+        // subject.login(token);
         subject.login(token1);
         //判断认证结果
         System.out.println("isAuthenticated : " + subject.isAuthenticated());
@@ -56,11 +57,6 @@ public class ShiroDemo {
         /*##################################  授权部分 ########################################*/
         //校验授权信息
         subject.checkRole("admin");
-
-
-
-
-
 
 
         //4、退出认证

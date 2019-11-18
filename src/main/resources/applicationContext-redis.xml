@@ -5,12 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <context:property-placeholder location="classpath*:redis.properties" />
+    <context:property-placeholder location="classpath*:redis.properties"/>
 
     <!-- 配置redis 实例-->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}"/>
         <property name="maxIdle" value="${redis.pool.maxIdle}"/>
         <property name="minIdle" value="${redis.pool.minIdle}"/>
         <property name="maxTotal" value="${redis.pool.maxTotal}"/>
@@ -20,8 +20,8 @@
         <property name="testWhileIdle" value="${redis.pool.testWhileIdle}"/>
     </bean>
     <!-- redis的连接池pool，不是必选项：timeout/password  -->
-    <bean id = "jedisSentinelPool" class="redis.clients.jedis.JedisSentinelPool" destroy-method="destroy">
-        <constructor-arg index="0" value="${redis.sentinels.masterName}" />
+    <bean id="jedisSentinelPool" class="redis.clients.jedis.JedisSentinelPool" destroy-method="destroy">
+        <constructor-arg index="0" value="${redis.sentinels.masterName}"/>
         <constructor-arg index="1">
             <set>
                 <value>${redis.sentinels.server1}</value>
@@ -29,7 +29,7 @@
                 <value>${redis.sentinels.server3}</value>
             </set>
         </constructor-arg>
-        <constructor-arg index="2" ref="jedisPoolConfig" />
+        <constructor-arg index="2" ref="jedisPoolConfig"/>
         <constructor-arg index="3" value="3000" type="int"/>
     </bean>
 </beans>

@@ -13,7 +13,7 @@ public class QueueProducerDemo {
 
     private static final String USERNAME = ActiveMQConnectionFactory.DEFAULT_USER;
     private static final String PASSWORD = ActiveMQConnectionFactory.DEFAULT_PASSWORD;
-    private static final String BROKER_URL= ActiveMQConnectionFactory.DEFAULT_BROKER_URL;
+    private static final String BROKER_URL = ActiveMQConnectionFactory.DEFAULT_BROKER_URL;
 
     //发送消息的条数
     private static final Integer MessageNum = 10;
@@ -51,7 +51,7 @@ public class QueueProducerDemo {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(connection != null) {
+            if (connection != null) {
                 try {
                     connection.close();
                 } catch (JMSException e) {
@@ -66,7 +66,7 @@ public class QueueProducerDemo {
     private static void sendMessage(Session session, MessageProducer messageProducer) {
 
         int count = 0;
-        while ( count++ < MessageNum) {
+        while (count++ < MessageNum) {
             try {
                 TextMessage messageText = session.createTextMessage("Active Message body ===" + count);
                 System.out.println("执行消息发送----" + count);

@@ -14,6 +14,7 @@ public class ThreadTest {
     public static class AddList implements Runnable {
 
         int startNum = 0;
+
         public AddList(int startNumber) {
             startNum = startNumber;
         }
@@ -29,7 +30,7 @@ public class ThreadTest {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         Thread thread1 = new Thread(new AddList(0));
         Thread thread2 = new Thread(new AddList(1));
 

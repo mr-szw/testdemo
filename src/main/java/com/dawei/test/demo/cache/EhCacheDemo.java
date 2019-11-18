@@ -8,14 +8,13 @@ import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
 /**
  * @author by Dawei on 2018/8/12.
- *  EhCache 主体内容
- *  1、CacheManager：Cache的管理类；
- *  2、Cache：具体的cache类信息，负责缓存的get和put等操作
- *  3、CacheConfiguration ：cache的配置信息，包含策略、最大值等信息
- *  4、Element：cache中单条缓存数据的单位
- *
- *  支持集群 数据同步可使用框架的JGroup实现同步
- *
+ * EhCache 主体内容
+ * 1、CacheManager：Cache的管理类；
+ * 2、Cache：具体的cache类信息，负责缓存的get和put等操作
+ * 3、CacheConfiguration ：cache的配置信息，包含策略、最大值等信息
+ * 4、Element：cache中单条缓存数据的单位
+ * <p>
+ * 支持集群 数据同步可使用框架的JGroup实现同步
  */
 public class EhCacheDemo {
 
@@ -29,8 +28,8 @@ public class EhCacheDemo {
         //缓存配置 也可以使用ehcache.xml进行配置 缓存配置对象可以针对指定的缓存对象，Cache Manager可管理多个缓存对象
         CacheConfiguration cacheConfiguration = new CacheConfiguration();
         /*
-        *    缓存对象信息配置 缓存配置信息的所有信息 均可配置 均有默认值
-        *    EhCache 功能强大
+         *    缓存对象信息配置 缓存配置信息的所有信息 均可配置 均有默认值
+         *    EhCache 功能强大
          */
         //配置缓存对象名
         cacheConfiguration.name("cache_name_default");

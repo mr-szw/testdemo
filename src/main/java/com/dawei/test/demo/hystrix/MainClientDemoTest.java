@@ -1,6 +1,7 @@
 package com.dawei.test.demo.hystrix;
 
 import com.alibaba.fastjson.JSON;
+
 import rx.Observable;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class MainClientDemoTest {
         //2、异步执行
         Future<List<String>> listFuture = hystrixTestDemo.queue();
         try {
-            if(listFuture.isDone()){
+            if (listFuture.isDone()) {
                 //2.1 get 时阻塞 等待返回
                 List<String> list = listFuture.get();
                 System.out.println("queue  执行完 " + JSON.toJSONString((list)));
@@ -30,9 +31,9 @@ public class MainClientDemoTest {
 
                 System.out.println("queue 已经执行取消 执行完， 取消操作， cancel= " + cancel);
 
-                if(listFuture.isCancelled()) {
-                    System.out.println("queue 已经取消完成" );
-                }else {
+                if (listFuture.isCancelled()) {
+                    System.out.println("queue 已经取消完成");
+                } else {
                     System.out.println("取消失败");
                 }
             }

@@ -1,12 +1,14 @@
 package com.dawei.test.demo.sort;
 
 import com.dawei.test.demo.pojo.DemoPojo;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -24,7 +26,7 @@ public class SortMethod {
     /* Stream 流式排序 */
     public static List<DemoPojo> streamSortMethod(List<DemoPojo> demoPojoList) {
         return demoPojoList.stream().filter(demoPojo ->
-            demoPojo.getId() != null).sorted(Comparator.comparing(DemoPojo::getBirthday).reversed()).collect(Collectors.toList());
+                demoPojo.getId() != null).sorted(Comparator.comparing(DemoPojo::getBirthday).reversed()).collect(Collectors.toList());
     }
 
     /* Stream 流式排序 */
@@ -33,15 +35,14 @@ public class SortMethod {
     }
 
 
-
     /*  冒泡排序 思想是冒出最大的*/
     public static void bubbleSort(List<Integer> numList) {
-        if(!CollectionUtils.isEmpty(numList)) {
+        if (!CollectionUtils.isEmpty(numList)) {
             int size = numList.size();
             int numIndex = 0;
-            for( ; numIndex < size - 1; numIndex++) {
-                for(int index = 0; index < size - numIndex -1; index++) {
-                    if(numList.get(index) > numList.get(index + 1)) {
+            for (; numIndex < size - 1; numIndex++) {
+                for (int index = 0; index < size - numIndex - 1; index++) {
+                    if (numList.get(index) > numList.get(index + 1)) {
                         Integer numA = numList.get(index + 1);
                         numList.set(index + 1, numList.get(index));
                         numList.set(index, numA);
