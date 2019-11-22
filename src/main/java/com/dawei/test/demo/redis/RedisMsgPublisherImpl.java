@@ -31,10 +31,7 @@ public class RedisMsgPublisherImpl implements RedisMsgPublisher {
             for (String channel : channels) {
                 Long publish = jedis.publish(channel, messageBody);
                 logger.info("Push message in channel={}, messageBody={}. result={}", channel, messageBody, publish);
-<<<<<<< HEAD
-=======
                 System.out.println("Push message in channel=" + channel + "   messageBody= " + messageBody + " . result=" + publish);
->>>>>>> master
                 resultPush += publish;
             }
         }

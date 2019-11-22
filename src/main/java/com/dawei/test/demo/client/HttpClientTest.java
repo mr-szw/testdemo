@@ -52,7 +52,6 @@ public class HttpClientTest {
         String urlPath = "https://jz-csapi.djtest.cn/customer/online/demand/designate";
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-<<<<<<< HEAD
         List<NameValuePair> nameValuePairList = new ArrayList<>();
 //        BasicNameValuePair basicNameValuePair1 = new BasicNameValuePair("activityId", "12314");
 //        BasicNameValuePair basicNameValuePair2 = new BasicNameValuePair("passportId", "12314");
@@ -83,8 +82,4 @@ public class HttpClientTest {
         }
     }
 
-
-
-=======
->>>>>>> master
 }
