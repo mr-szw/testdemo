@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author by Dawei on 2019/11/23.
  */
-public class BloomFilter implements Serializable {
+public class MyBloomFilter implements Serializable {
 
     private static final long serialVersionUID = 8746284993613083826L;
 
@@ -33,12 +33,12 @@ public class BloomFilter implements Serializable {
     /**
      * 设置过滤器容量
      */
-    public BloomFilter(int filterSize) {
+    public MyBloomFilter(int filterSize) {
         this(filterSize, MisjudgmentRate.MIDDLE, null);
     }
 
 
-    public BloomFilter(int filterSize, MisjudgmentRate misjudgmentRate, Double maxCoverFactor) {
+    public MyBloomFilter(int filterSize, MisjudgmentRate misjudgmentRate, Double maxCoverFactor) {
 
         this.hashSeeds = misjudgmentRate.getHashSeeds();
 
