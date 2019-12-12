@@ -1,15 +1,13 @@
 package com.dawei.test.demo.sort;
 
 import com.dawei.test.demo.pojo.DemoPojo;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author by Dawei on 2018/7/18.

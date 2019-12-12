@@ -2,6 +2,7 @@ package com.dawei.test.demo.hystrix;
 
 import com.alibaba.fastjson.JSON;
 
+import com.dawei.test.demo.utils.GsonUtil;
 import rx.Observable;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class MainClientDemoTest {
         HystrixTestDemo hystrixTestDemo = new HystrixTestDemo("a");
         //1、阻塞执行
         List<String> execute = hystrixTestDemo.execute();
-        System.out.println("execute:" + JSON.toJSONString(execute));
+        System.out.println("execute:" + GsonUtil.toJson(execute));
 
         //2、异步执行
         Future<List<String>> listFuture = hystrixTestDemo.queue();
