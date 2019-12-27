@@ -2,19 +2,23 @@ package com.dawei.test.demo;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
+import com.dawei.test.demo.function.DoWorkSomethingDemo;
 import com.google.common.collect.Lists;
 
 /**
@@ -130,5 +134,42 @@ public class DemoTestMain implements Cloneable {
 		workerQueue.add(thread);
 
 		thread.isDaemon();
+	}
+
+
+
+	 private ExecutorService fixedThreadPoolTest = Executors.newFixedThreadPool(10);
+
+	private void testFuture() {
+
+		Map<String, Future<Object>> reusltMap = new HashMap<>();
+		Future<String> submit1 = fixedThreadPoolTest.submit(this::test1);
+		Future<Integer> submit2 = fixedThreadPoolTest.submit(this::test2);
+		Future<List<String>> submit3 = fixedThreadPoolTest.submit(this::test3);
+		reusltMap.put("submit1", submit1);
+		reusltMap.put("submit2", submit2);
+		reusltMap.put("submit3", submit3);
+
+	}
+
+
+
+
+	@Test
+	public void testMethod12() throws Throwable {
+//		String withPerf = DoWorkSomethingDemo.   ithPerf("", this::test1, 1);
+//		Integer integer = DoWorkSomethingDemo.executeWithPerf("", test2, 1);
+//		List<String> strings = DoWorkSomethingDemo.executeWithPerf("", this::test3, 1);
+	}
+
+	private String test1() {
+		return "a";
+	}
+
+	private Integer test2() {
+		return 1;
+	}
+	private List<String> test3() {
+		return Lists.newArrayList("1", "4");
 	}
 }
