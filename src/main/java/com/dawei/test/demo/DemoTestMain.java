@@ -2,23 +2,19 @@ package com.dawei.test.demo;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
-import com.dawei.test.demo.function.DoWorkSomethingDemo;
 import com.google.common.collect.Lists;
 
 /**
@@ -142,13 +138,13 @@ public class DemoTestMain implements Cloneable {
 
 	private void testFuture() {
 
-		Map<String, Future<Object>> reusltMap = new HashMap<>();
-		Future<String> submit1 = fixedThreadPoolTest.submit(this::test1);
-		Future<Integer> submit2 = fixedThreadPoolTest.submit(this::test2);
-		Future<List<String>> submit3 = fixedThreadPoolTest.submit(this::test3);
-		reusltMap.put("submit1", submit1);
-		reusltMap.put("submit2", submit2);
-		reusltMap.put("submit3", submit3);
+//		Map<String, Future<Object>> reusltMap = new HashMap<>();
+//		Future<String> submit1 = fixedThreadPoolTest.submit(this::test1);
+//		Future<Integer> submit2 = fixedThreadPoolTest.submit(this::test2);
+//		Future<List<String>> submit3 = fixedThreadPoolTest.submit(this::test3);
+//		reusltMap.put("submit1", submit1);
+//		reusltMap.put("submit2", submit2);
+//		reusltMap.put("submit3", submit3);
 
 	}
 
