@@ -2,6 +2,7 @@ package com.dawei.test.demo;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
+import com.dawei.test.demo.pojo.DemoPojo;
+import com.dawei.test.demo.pojo.ResultDto;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
@@ -187,6 +190,32 @@ public class DemoTestMain implements Cloneable {
 
 	@Test
 	public void testMethod12() throws Throwable {
+
+
+		 Map<String, Object> paramMap = new HashMap<>();
+		 Map<String, Double> paramMap2 = new HashMap<>();
+		 paramMap.put("a", 1);
+		 paramMap2.put("a", 1.50D);
+
+
+		System.out.println(paramMap.get("a").hashCode());
+		System.out.println(paramMap2.get("a").intValue());
+
+
+		ResultDto<String> resultDtoStr = new ResultDto();
+		resultDtoStr.setCode(0);
+		resultDtoStr.setCodeMsg("23");
+		resultDtoStr.setData("ABC");
+		ResultDto resultDto = resultDtoStr;
+		System.out.println(GsonUtil.toJson(resultDto));
+
+		ResultDto<DemoPojo> resultDtoPojo = resultDto;
+		System.out.println(GsonUtil.toJson(resultDtoPojo));
+		System.out.println(GsonUtil.toJson(resultDtoPojo.getData()));
+
+		System.out.println(GsonUtil.toJson(resultDtoPojo.getData().getClass().getName()));
+		DemoPojo data = resultDtoPojo.getData();
+		System.out.println(GsonUtil.toJson(data));
 //		String withPerf = DoWorkSomethingDemo.   ithPerf("", this::test1, 1);
 //		Integer integer = DoWorkSomethingDemo.executeWithPerf("", test2, 1);
 //		List<String> strings = DoWorkSomethingDemo.executeWithPerf("", this::test3, 1);

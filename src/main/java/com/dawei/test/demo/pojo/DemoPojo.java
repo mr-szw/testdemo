@@ -17,5 +17,7 @@ public class DemoPojo implements Serializable {
     private String name;
     private Date birthday;
 
+    private int test;
+
 
 }
