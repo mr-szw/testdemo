@@ -44,22 +44,22 @@ public class VipJsonObject {
 		return (T) object;
 	}
 
-	public void updateObject(Object obj) {
-		if (type == VipJsonObjClazz.UNDEFINED) {
-			throw new RuntimeException("undefined type");
-		}
-		if (obj == null) {
-			this.json = null;
-			return;
-		}
-
-		Class<?> clazz = VipJsonObjClazz.getTypeClazz(type);
-		if (!clazz.isAssignableFrom(obj.getClass())) {
-			throw new RuntimeException("can not cast.");
-		}
-
-		this.json = GsonUtil.toJson(obj);
-	}
+//	public void updateObject(Object obj) {
+//		if (type == VipJsonObjClazz.UNDEFINED) {
+//			throw new RuntimeException("undefined type");
+//		}
+//		if (obj == null) {
+//			this.json = null;
+//			return;
+//		}
+//
+//		Class<?> clazz = VipJsonObjClazz.getTypeClazz(type);
+//		if (!clazz.isAssignableFrom(obj.getClass())) {
+//			throw new RuntimeException("can not cast.");
+//		}
+//
+//		this.json = GsonUtil.toJson(obj);
+//	}
 
 
 
