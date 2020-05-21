@@ -29,12 +29,12 @@ public class MainClientDemoTest {
 		MainClientDemoTest test = new MainClientDemoTest();
 
 
-		HystrixTestDemo hystrixTestDemo = new HystrixTestDemo("test");
+		HystrixTestDemo hystrixTestDemo = new HystrixTestDemo("2");
 
 
 		Object object = new Object();
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 10; i++) {
 			Thread thread1 = new Thread(() -> doWork(hystrixTestDemo));
 			Thread thread2= new Thread(() -> doWork(hystrixTestDemo));
 			thread1.start();

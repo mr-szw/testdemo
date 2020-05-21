@@ -19,7 +19,7 @@ public class HystrixTestDemo extends HystrixCommand<List<String>> {
 	private static final String COMMAND_GROUP_KEY = "Demo_Group_Key";
 	private static final String COMMAND_KEY = "Demo_Key";
 	private static final int EXECUTION_TIMEOUT_MILLISECONDS = 100;
-	private static final int THRAED_ACTIVITE_TIME_MILLISECONDS = 100;
+	private static final int THREAD_ACTIVITY_TIME_MILLISECONDS = 100;
 
 	private String parameterName;
 
@@ -64,18 +64,18 @@ public class HystrixTestDemo extends HystrixCommand<List<String>> {
 						 * 设置在断路器被打开，拒绝请求到再次尝试请求的时间间隔。
 						 * 默认值：5000（毫秒）
 						 */
-						.withCircuitBreakerSleepWindowInMilliseconds(3000)
+						.withCircuitBreakerSleepWindowInMilliseconds(30)
 						/*
 						 * circuitBreaker.errorThresholdPercentage
 						 * 设置打开断路器并启动回退逻辑的错误比率。
 						 * （这个参数的效果受到circuitBreaker.requestVolumeThreshold和滚动时间窗口的时间长度影响）
 						 * 默认值：50(%)
 						 */
-						.withCircuitBreakerErrorThresholdPercentage(50) //错误比例触发熔断： 失败50%的情况下
+						.withCircuitBreakerErrorThresholdPercentage(1)
 				)
 				.andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
 						//设置核心线程池的大小
-						.withKeepAliveTimeMinutes(THRAED_ACTIVITE_TIME_MILLISECONDS)  //线程配置保持连接时长
+						.withKeepAliveTimeMinutes(THREAD_ACTIVITY_TIME_MILLISECONDS)  //线程配置保持连接时长
 						.withCoreSize(1) //核心线程数
 						.withMaximumSize(1)
 				)
@@ -90,6 +90,11 @@ public class HystrixTestDemo extends HystrixCommand<List<String>> {
 	protected List<String> run() throws Exception {
 
 		System.out.println("业务内容： " + parameterName + "  " + Thread.currentThread().getName());
+
+		Thread.sleep(1000L);
+		if (parameterName.contains("2")) {
+			throw new InterruptedException("Error #");
+		}
 
 		return Collections.singletonList("parameterName " + parameterName);
 	}
