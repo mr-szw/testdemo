@@ -72,15 +72,17 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.1.0</version>
+            <version>3.3.0</version>
         </dependency>
 
-        <!-- fastjson -->
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.13.1</version>
         </dependency>
+
+
         <!--shiro-core -->
         <dependency>
             <groupId>org.apache.shiro</groupId>

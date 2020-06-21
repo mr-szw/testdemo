@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.CollectionUtils;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.dubbo.common.json.JSON;
+import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -87,7 +88,7 @@ public class CallableDemo {
 
 		Path path = Paths.get("/home/sinbad/work/workspace/temp/vip_user_board_group.txt");
 		List<String> list = Files.readAllLines(path);
-		System.out.println(JSON.toJSONString(list));
+		System.out.println(GsonUtil.toJson(list));
 	}
 
 }

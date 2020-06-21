@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Future;
 
-import com.alibaba.fastjson.JSON;
 import com.dawei.test.demo.utils.GsonUtil;
 
 import lombok.AllArgsConstructor;
@@ -96,7 +95,7 @@ public class MainClientDemoTest {
 			if (listFuture.isDone()) {
 				//2.1 get 时阻塞 等待返回
 				List<String> list = listFuture.get();
-				System.out.println("queue  执行完 " + JSON.toJSONString((list)));
+				System.out.println("queue  执行完 " + GsonUtil.toJson(list));
 			} else {
 				boolean cancel = listFuture.cancel(true);
 
