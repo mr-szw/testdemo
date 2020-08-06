@@ -108,6 +108,11 @@ public class MyBloomFilter implements Serializable {
         this.noteBook.set(index, true);
     }
 
+
+    public String getNoteBook() {
+        return new String(this.noteBook.toByteArray());
+    }
+
     private int getHashCode(String date, int hashSeed) {
         char[] dataChars = date.toCharArray();
         int hash = 0;
@@ -127,8 +132,11 @@ public class MyBloomFilter implements Serializable {
      */
     public enum MisjudgmentRate {
 
+        //4
         VERY_SMALL(new int[]{2, 3, 5, 7}),
+        //8
         SMALL(new int[]{2, 3, 5, 7, 11, 13, 17, 19}),
+        //16
         MIDDLE(new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53}),
         HIGH(new int[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
             61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131});

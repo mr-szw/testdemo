@@ -8,19 +8,16 @@ import java.util.UUID;
  */
 public class BloomFilterDemo {
 
-    public void checkFailed() throws Throwable {
+    public void checkFailed() throws Exception {
 
-        MyBloomFilter myBloomFilter = new MyBloomFilter(100, MisjudgmentRate.MIDDLE, 0.8);
+        MyBloomFilter myBloomFilter = new MyBloomFilter(10000, MisjudgmentRate.MIDDLE, 0.8);
 
+        //容量一万 存下会有多少个重复的
         int i = 9000;
-        String dataTemp = UUID.randomUUID().toString();
         for (;i-- > 0;) {
             String data = UUID.randomUUID().toString();
             myBloomFilter.add(data);
         }
-        myBloomFilter.add(dataTemp);
-
-        System.out.println(myBloomFilter.checkExist(dataTemp));
 
         int j = 100000;
         int failedCount = 0;
@@ -34,6 +31,7 @@ public class BloomFilterDemo {
                 System.out.println(String.format("Count : %s filedNum = %s ", dataCount , ++failedCount));
             }
         }
+        System.out.println(myBloomFilter.getNoteBook());
     }
 
 
@@ -55,5 +53,11 @@ public class BloomFilterDemo {
             }
             myBloomFilter.add(data);
         }
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        BloomFilterDemo bloomFilterDemo = new BloomFilterDemo();
+        bloomFilterDemo.checkFailed();
     }
 }
