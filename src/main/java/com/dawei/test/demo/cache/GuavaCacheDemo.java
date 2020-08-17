@@ -37,6 +37,7 @@ public class GuavaCacheDemo {
 		return guavaCacheDemo;
 	}
 
+
 	/* 单例 初始化 */
 	private GuavaCacheDemo() {
 		initCacheLoading();

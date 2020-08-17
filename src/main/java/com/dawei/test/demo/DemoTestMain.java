@@ -80,6 +80,8 @@ public class DemoTestMain implements Cloneable {
 
 	public static void main(String[] args)throws Throwable{
 
+		System.out.println(tableSizeFor(4));
+
 
 		System.out.println(appendNativeH5Path(FE_TOPIC_HOME_URL, NATIVE_TOPIC_HOME_URL, "331975096", MCC_REF));
 
@@ -286,6 +288,31 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
+
+	@Test
+	public void testThreadParam() {
+
+
+		Random random = new Random();
+
+		int times = 2000;
+		while (times-- > 0) {
+			int randomPage = random.nextInt(20);
+			String type = "hot";
+			String after;
+			if (randomPage % 2 == 0) {
+				type = "latest";
+			}
+			after = String.valueOf(randomPage * 6);
+			if (after.equals("0")) {
+				after = "";
+			}
+			System.out.println(type + "," + after);
+		}
+	}
+
+
+
 	public void cycleTurn(long start, long stop) {
 
 		try {
@@ -299,6 +326,17 @@ public class DemoTestMain implements Cloneable {
 
 
 
+
+	static final int MAXIMUM_CAPACITY = 1 << 30;
+	static  int tableSizeFor(int cap) {
+		int n = cap - 1;
+		n |= n >>> 1;
+		n |= n >>> 2;
+		n |= n >>> 4;
+		n |= n >>> 8;
+		n |= n >>> 16;
+		return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+	}
 
 
 
