@@ -1,6 +1,7 @@
 package com.dawei.test.demo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,11 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
 import com.dawei.test.demo.pojo.DemoPojo;
@@ -34,7 +37,24 @@ public class DemoTestMain implements Cloneable {
 	private ConcurrentHashMap<Thread, Long> concurrentHashMap = new ConcurrentHashMap<>();
 	private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(10);
 
+	private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+
+
 	public static void main(String[] args) {
+
+
+		long startTime = 0L;
+		long stopTime = 20L;
+
+
+		long stepLen = (stopTime - startTime) / 5;
+
+		for (int i = 1; i <= 5; i++) {
+			long stop = startTime + stepLen * i;
+			long start = stop - stepLen;
+			System.out.println(start + "  " + stop);
+			new Thread(() -> getAnnounceData(start, stop)).start();
+		}
 
 		System.out.println(System.currentTimeMillis() - 1585646833897L >= 31536000000L);
 
@@ -56,7 +76,7 @@ public class DemoTestMain implements Cloneable {
 	@Test
 	public void testMethod() throws Throwable {
 
-		String test = 	"abc#"	;
+		String test = "abc#";
 		System.out.println(test.substring(test.indexOf("#") + 1));
 		System.out.println(test.substring(0, test.indexOf("#")));
 		BoardMoreConfigVo boardMoreConfigVo = new BoardMoreConfigVo();
@@ -170,11 +190,25 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
+	private ExecutorService fixedThreadPoolTest = Executors.newFixedThreadPool(10);
 
-	 private ExecutorService fixedThreadPoolTest = Executors.newFixedThreadPool(10);
+	@Test
+	public void testSchedule() throws InterruptedException {
+		scheduledExecutorService.schedule(DemoTestMain::testFuture, 3, TimeUnit.SECONDS);
 
-	private void testFuture() {
 
+		TimeUnit.SECONDS.sleep(20);
+
+		System.out.println("Wait stop ");
+	}
+
+
+
+
+
+	private static void testFuture() {
+
+		System.out.println("System on Date " + new Date());
 //		Map<String, Future<Object>> reusltMap = new HashMap<>();
 //		Future<String> submit1 = fixedThreadPoolTest.submit(this::test1);
 //		Future<Integer> submit2 = fixedThreadPoolTest.submit(this::test2);
@@ -186,16 +220,14 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
-
 	@Test
 	public void testMethod12() throws Throwable {
 
 
-		 Map<String, Object> paramMap = new HashMap<>();
-		 Map<String, Double> paramMap2 = new HashMap<>();
-		 paramMap.put("a", 1);
-		 paramMap2.put("a", 1.50D);
+		Map<String, Object> paramMap = new HashMap<>();
+		Map<String, Double> paramMap2 = new HashMap<>();
+		paramMap.put("a", 1);
+		paramMap2.put("a", 1.50D);
 
 
 		System.out.println(paramMap.get("a").hashCode());
@@ -221,6 +253,68 @@ public class DemoTestMain implements Cloneable {
 //		List<String> strings = DoWorkSomethingDemo.executeWithPerf("", this::test3, 1);
 	}
 
+
+	private static void getAnnounceData(long st, long test) {
+		System.out.println("st " + st + " --" + test);
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+	/**
+	 * 向圈子的tag 中追加单个tag
+	 */
+	public static String appendTags(String oldTags, String addTag) {
+		if (StringUtils.isEmpty(addTag)) {
+			return oldTags;
+		}
+		if (StringUtils.isEmpty(oldTags)) {
+			return addTag;
+		}
+		List<String> tagList = Lists.newArrayList(oldTags.split(","));
+		if (!tagList.contains(addTag)) {
+			tagList.add(addTag);
+		}
+		return String.join(",", tagList);
+	}
+
+	/**
+	 * 向圈子的tag 中追加多个tag
+	 */
+	public static String appendTags(String oldTags, String[] addTagArray) {
+		if (addTagArray == null || addTagArray.length == 0) {
+			return oldTags;
+		}
+		String resultTags = oldTags;
+		for (String tag : addTagArray) {
+			resultTags = appendTags(resultTags, tag);
+		}
+		return resultTags;
+	}
+
+
+
+	@Test
+	public void testAddTags() {
+
+		System.out.println(appendTags("1", "2,3,4,5".split(",")));
+
+
+	}
+
+
+
+
+
+
+
+
+
+
 	private String test1() {
 		return "a";
 	}
@@ -228,6 +322,7 @@ public class DemoTestMain implements Cloneable {
 	private Integer test2() {
 		return 1;
 	}
+
 	private List<String> test3() {
 		return Lists.newArrayList("1", "4");
 	}
