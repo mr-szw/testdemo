@@ -1,33 +1,45 @@
 package com.dawei.test.demo;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
 
 import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import com.dawei.test.demo.future.ExecutorApi;
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
 import com.dawei.test.demo.pojo.DemoPojo;
 import com.dawei.test.demo.pojo.ResultDto;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
+
 
 /**
  * @author Dawei  on 2018/3/25.
@@ -40,7 +52,45 @@ public class DemoTestMain implements Cloneable {
 	private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
 
 
-	public static void main(String[] args) {
+
+
+	public static String appendNativeH5Path(String h5UrlPath, String nativeUrlPath,
+									 @Nonnull Object... params) throws Exception {
+		// mio://urlPath&param=18771603&fallback_url=
+		//
+		// encode(mibrowser://home?web_url=
+		//
+		// encode(https://urlPath?param=18788534)
+
+		String feJumpBoardIdUrl = URLEncoder.encode(String.format(h5UrlPath, params),
+				StandardCharsets.UTF_8.displayName());
+		String fallBackUrl = URLEncoder.encode(
+				String.format("mibrowser://home?web_url=%s", feJumpBoardIdUrl),
+				StandardCharsets.UTF_8.displayName());
+		Object[] objects = Arrays.copyOf(params, params.length + 1);
+		objects[params.length] = fallBackUrl;
+		return String.format(nativeUrlPath, objects);
+	}
+
+	// 专题页
+	public static final String FE_TOPIC_HOME_URL = "https://web.vip.miui.com/page/info/mio/mio/subject?actid=%s&ref=%s";
+	public static final String NATIVE_TOPIC_HOME_URL = "mio://web.vip.miui.com/page/info/mio/mio/subject?actid=%s&ref=%s&fallback_url=%s";
+
+	//MCC 使用的ref
+	public static final String MCC_REF = "newhome&preventBack=true";
+
+	public static void main(String[] args)throws Throwable{
+
+		System.out.println(tableSizeFor(4));
+
+
+		System.out.println(appendNativeH5Path(FE_TOPIC_HOME_URL, NATIVE_TOPIC_HOME_URL, "331975096", MCC_REF));
+
+
+		boolean addSuccess = true;
+
+		//Assert.assertTrue("Resource must by only, =", !addSuccess );
+
 
 
 		long startTime = 0L;
@@ -73,7 +123,17 @@ public class DemoTestMain implements Cloneable {
 		System.out.println(GsonUtil.toJson(message));
 	}
 
-	@Test
+
+
+//	public static void appendNativeH5Path(String nativeUrlPath, @Nonnull Object... params) throws Exception {
+//		String fallBackUrl = "mio://urlPath&param=18771603&fallback_url=";
+//
+//		Object[] objects = Arrays.copyOf(params, params.length + 1);
+//		objects[params.length] = fallBackUrl;
+//		System.out.println(Arrays.toString(objects));
+//	}
+
+		@Test
 	public void testMethod() throws Throwable {
 
 		String test = "abc#";
@@ -219,16 +279,117 @@ public class DemoTestMain implements Cloneable {
 
 	}
 
+	private static final Executor executorService = new ThreadPoolExecutor(10, 10, 10,
+			TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10),
+			new ThreadPoolExecutor.CallerRunsPolicy());
+
+	@Test
+	public void testThread() {
+
+		// 2019-10-10 15:57:49
+		long startTime = 1570694269000L;
+		long stopTime = System.currentTimeMillis();
+
+		int threadNum = 10;
+
+		long stepLen = (stopTime - startTime) / threadNum;
+		System.out.println(new Date().toString());
+		for (int i = 1; i <= threadNum; i++) {
+			long stop = startTime + stepLen * i;
+			long start = stop - stepLen;
+
+
+			executorService.execute(() -> cycleTurn(start, stop));
+
+
+		}
+
+		System.out.println(new Date().toString());
+
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(new Date().toString());
+		System.exit(1);
+	}
+
+
+
+	@Test
+	public void testThreadParam() {
+
+
+		Random random = new Random();
+
+		int times = 2000;
+		while (times-- > 0) {
+			int randomPage = random.nextInt(20);
+			String type = "hot";
+			String after;
+			if (randomPage % 2 == 0) {
+				type = "latest";
+			}
+			after = String.valueOf(randomPage * 6);
+			if (after.equals("0")) {
+				after = "";
+			}
+			System.out.println(type + "," + after);
+		}
+	}
+
+
+
+	public void cycleTurn(long start, long stop) {
+
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(start + " " + stop);
+	}
+
+
+
+
+	static final int MAXIMUM_CAPACITY = 1 << 30;
+	static  int tableSizeFor(int cap) {
+		int n = cap - 1;
+		n |= n >>> 1;
+		n |= n >>> 2;
+		n |= n >>> 4;
+		n |= n >>> 8;
+		n |= n >>> 16;
+		return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+	}
+
+
+
+	public static HashSet<String> getSplitSet(String element) {
+		LinkedHashSet<String> splitSet = null;
+		if (!StringUtils.isEmpty(element)) {
+			splitSet = new LinkedHashSet<>();
+			String[] splitArray = element.split("\\|");
+			for (String split : splitArray) {
+				splitSet.add(split.trim());
+			}
+		}
+
+		return splitSet;
+	}
 
 	@Test
 	public void testMethod12() throws Throwable {
+		System.out.println(getSplitSet("558495|18788534|558535|18066617|"));
+		System.out.println(getSplitSet("558495|18788534|558535|18066617"));
 
 
 		Map<String, Object> paramMap = new HashMap<>();
 		Map<String, Double> paramMap2 = new HashMap<>();
 		paramMap.put("a", 1);
 		paramMap2.put("a", 1.50D);
-
 
 		System.out.println(paramMap.get("a").hashCode());
 		System.out.println(paramMap2.get("a").intValue());
@@ -319,6 +480,9 @@ public class DemoTestMain implements Cloneable {
 		return "a";
 	}
 
+
+
+
 	private Integer test2() {
 		return 1;
 	}
@@ -326,4 +490,25 @@ public class DemoTestMain implements Cloneable {
 	private List<String> test3() {
 		return Lists.newArrayList("1", "4");
 	}
+
+
+
+	class TryUtil implements ExecutorApi<String> {
+
+
+		@Override
+		public String execute() throws Throwable {
+			try {
+				return testThrowable();
+			} catch (Throwable throwable) {
+				throw throwable;
+			}
+		}
+	}
+
+
+
+
+
+
 }
