@@ -481,6 +481,15 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
+	public String testThrowable()  throws Throwable {
+
+		throw new Throwable();
+
+
+
+
+	}
+
 
 
 	private Integer test2() {
