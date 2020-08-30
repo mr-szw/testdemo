@@ -77,30 +77,7 @@ public class AESUtil {
 
 
     public static void main(String[] args) throws Exception {
-
-        int total = 1000000;
-        long startTime = System.nanoTime();
-        for (int i = 0; i < total; i++) {
-
-
-            Random random = new Random(System.currentTimeMillis());
-            long next = random.nextLong() + 6000000000L;
-            String encryptOpen = encryptOpen(String.valueOf(next));
-            String decryptOpen = decryptOpen(encryptOpen);
-
-            if (!String.valueOf(next).equals(decryptOpen)) {
-                System.out.println("################# failed  " + next);
-            }
-        }
-        long endTime = System.nanoTime();
-
-
-        System.out.println(" startTime " + startTime);
-        System.out.println(" endTime " + endTime);
-        System.out.println(" total " + (endTime - startTime));
-        System.out.println(" avg " + (endTime - startTime) / total);
-
-
+        System.out.println(decrypt("81B57D4DD87EECAD0CEA13670920E4DA"));
     }
 
 }
