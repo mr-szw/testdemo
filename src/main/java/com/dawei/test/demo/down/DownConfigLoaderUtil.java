@@ -49,7 +49,8 @@ public class DownConfigLoaderUtil {
 			}
 		}
 
-		String sentinelJsonConfig = "[{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList\",\"gradeType\":0,\"rtOrExcRateNum\":350.0,\"windowTime\":3},{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList\",\"gradeType\":1,\"rtOrExcRateNum\":0.2,\"windowTime\":3},{\"configType\":2,\"resourceName\":\"getHomeRecommendContentList\",\"gradeType\":0,\"rtOrExcRateNum\":700.0,\"windowTime\":1},{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList_TEST\",\"gradeType\":1,\"rtOrExcRateNum\":0.2,\"windowTime\":5}]";
+		//String sentinelJsonConfig = "[{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList_TEST\",\"gradeType\":0,\"rtOrExcRateNum\":350.0,\"windowTime\":3},{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList\",\"gradeType\":1,\"rtOrExcRateNum\":0.2,\"windowTime\":3},{\"configType\":2,\"resourceName\":\"getHomeRecommendContentList\",\"gradeType\":0,\"rtOrExcRateNum\":700.0,\"windowTime\":1},{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList_TEST\",\"gradeType\":1,\"rtOrExcRateNum\":0.2,\"windowTime\":5}]";
+		String sentinelJsonConfig = "[{\"configType\":2,\"resourceName\":\"getBoardLiveAnnounceList_TEST\",\"gradeType\":1,\"rtOrExcRateNum\":0.2,\"windowTime\":5}]";
 		if (!StringUtils.isEmpty(sentinelJsonConfig)
 				&& !sentinelJsonConfig.equals(LAST_TIME_CONFIG)) {
 			log.info("###### New sentinel configJson={}", sentinelJsonConfig);
