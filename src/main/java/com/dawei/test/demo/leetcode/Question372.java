@@ -57,6 +57,7 @@ public class Question372 {
 		mySuperPow(a, b);
 
 
+		return 0;
 	}
 
 	public double mySuperPow(int a, Integer[] b) {
