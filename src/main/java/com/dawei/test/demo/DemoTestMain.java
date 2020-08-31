@@ -292,9 +292,7 @@ public class DemoTestMain implements Cloneable {
 	@Test
 	public void testThreadParam() {
 
-
 		Random random = new Random();
-
 		int times = 2000;
 		while (times-- > 0) {
 			int randomPage = random.nextInt(20);

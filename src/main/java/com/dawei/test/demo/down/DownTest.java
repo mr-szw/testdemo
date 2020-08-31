@@ -28,8 +28,10 @@ public class DownTest {
 
     }
 
-    private static String testMethod() {
+    private static String testMethod() throws InterruptedException {
+
         System.out.println("testMethod");
+        TimeUnit.MILLISECONDS.sleep(500);
         throw new RuntimeException("Test");
     }
 

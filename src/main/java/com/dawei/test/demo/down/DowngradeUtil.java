@@ -1,8 +1,11 @@
 package com.dawei.test.demo.down;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.dawei.test.demo.function.SuperSupplier;
 
@@ -34,6 +37,11 @@ public class DowngradeUtil<T> implements SuperSupplier<T> {
         this.errorApi = errorApi;
     }
 
+    private static AtomicInteger pass = new AtomicInteger();
+    private static AtomicInteger block = new AtomicInteger();
+    private static AtomicInteger total = new AtomicInteger();
+
+
     @Override
     public T get() throws Throwable {
         DownConfigLoaderUtil.loadDownStrategyConfig();
@@ -49,19 +57,24 @@ public class DowngradeUtil<T> implements SuperSupplier<T> {
      */
     private T runTask(String resourceName, SuperSupplier<T> executorApi, SuperSupplier<T> fallBackApi,
                       SuperSupplier<T> errorApi) throws Throwable {
-        Entry entry = null;
-        try {
-            entry = SphU.entry(resourceName);
+        //Entry entry = null;
+        try (Entry entry = SphU.entry(resourceName)){
+          //  entry = SphU.entry(resourceName);
+            System.out.println("pass" + pass.incrementAndGet());
             return executorApi.get();
         } catch (BlockException blockException) {
             blockException.fillInStackTrace();
+            System.out.println("block" + block.incrementAndGet());
             log.error("On call {} failed been down", resourceName, blockException);
             if (fallBackApi != null) {
                 return fallBackApi.get();
             } else {
                 throw blockException;
             }
+
         } catch (Exception throwable) {
+            Tracer.trace(throwable);
+            System.out.println("total" + total.incrementAndGet());
             throwable.fillInStackTrace();
             log.error("On call {} error ", resourceName);
             if (errorApi != null) {
@@ -69,8 +82,9 @@ public class DowngradeUtil<T> implements SuperSupplier<T> {
             } else {
                 throw throwable;
             }
-        } finally {
-            entry.exit();
         }
+//        } finally {
+//            entry.exit();
+//        }
     }
 }
