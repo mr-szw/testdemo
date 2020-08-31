@@ -1,6 +1,8 @@
 package com.dawei.test.demo.redis;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.redisson.Redisson;
@@ -10,6 +12,7 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
 import com.dawei.test.demo.utils.GsonUtil;
+import com.google.common.collect.Lists;
 
 public class RedissonConnTry {
 
@@ -18,6 +21,10 @@ public class RedissonConnTry {
 	private static final int TIMEOUT = 5000;
 
 	public static void main(String[] args) throws InterruptedException {
+
+		List<String> nodeList = new ArrayList<>();
+		nodeList.removeAll(Lists.newArrayList("11", "22"));
+
 
 
 		Config config = new Config();
