@@ -19,7 +19,7 @@ public class Question200 {
 				grid[i][j] = (char) random.nextInt(1);
 			}
 		}
-		new Question200().numIslands(grid);
+		System.out.println(new Question200().numIslands(grid));
 	}
 
 
