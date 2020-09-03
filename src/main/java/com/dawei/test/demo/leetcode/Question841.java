@@ -16,7 +16,7 @@ public class Question841 {
 
     public static void main(String[] args) {
 
-        System.out.println(new Question841().canVisitAllRooms(grid));
+      //  System.out.println(new Question841().canVisitAllRooms(grid));
     }
 
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
@@ -51,6 +51,7 @@ public class Question841 {
 
         Iterator<Map.Entry<Integer, Boolean>> iterator = roomListMap.entrySet().iterator();
 
+        return false;
     }
 
 }

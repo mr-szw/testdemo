@@ -33,11 +33,10 @@ public class Question20 {
 			if (aChar == '+' || aChar == '-') {
 				haveSign = true;
 			}
-			if (aChar)
 		}
 
 
 
-
+return false;
 	}
 }
