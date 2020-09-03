@@ -14,7 +14,7 @@ public class Question20 {
 
 
 	public static void main(String[] args) {
-		String grid = "";
+		String grid = "1";
 		System.out.println(new Question20().isNumber(grid));
 	}
 
@@ -26,18 +26,50 @@ public class Question20 {
 		boolean haveSign = false;
 		//点号
 		boolean havePoint = false;
+		boolean haveE = false;
+		boolean haveNum = false;
 
-		char[] chars = s.toCharArray();
+		//String  string = new StringBuffer(s).reverse().toString();
+		String string = s;
+
+		char[] chars = string.toCharArray();
 
 		for (char aChar : chars) {
+			if (aChar != '.' && aChar != '+' && aChar != '-' && aChar != 'e' && aChar != 'E' && (aChar - '9' > 0 || aChar - '0' <0)) {
+				return false;
+			}
+
+
 			if (aChar == '+' || aChar == '-') {
+				if (haveSign) {
+					return false;
+				}
 				haveSign = true;
 			}
-			if (aChar)
+
+			if (aChar == 'e' || aChar == 'E') {
+				if (!haveNum || haveE || havePoint) {
+					return false;
+				}
+				haveE = true;
+			}
+
+			if (aChar - '0' >= 0 && '9' - aChar >= 0 ) {
+				haveSign = false;
+				havePoint = false;
+				haveNum = true;
+			}
+
+
+			if (aChar == '.') {
+				if (haveE || havePoint) {
+					return false;
+				}
+				havePoint = true;
+			}
+
 		}
 
-
-
-
+		return !( (haveE || havePoint || haveSign) && !haveNum);
 	}
 }

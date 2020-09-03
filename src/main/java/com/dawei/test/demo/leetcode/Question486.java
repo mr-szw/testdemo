@@ -39,4 +39,24 @@ public class Question486 {
 	}
 
 
+
+	private boolean digui(int[] nums) {
+		return maxValueSelect(nums, 0, nums.length -1, 1) >= 0;
+	}
+
+
+	//获取可选位置的最大值
+	private int maxValueSelect(int[] numsOrigin, int start, int end, int whoSelect) {
+
+		//先选左边 找到 左序遍历的最优解
+		int selectStart = numsOrigin[start]  * whoSelect +  maxValueSelect(numsOrigin, start + 1, end, whoSelect * -1);
+		int selectEnd = numsOrigin[end]  * whoSelect +  maxValueSelect(numsOrigin, start, end - 1, whoSelect * -1);
+
+		return Math.max(selectStart, selectEnd);
+
+
+	}
+
+
+
 }
