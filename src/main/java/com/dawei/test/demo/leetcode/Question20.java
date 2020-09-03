@@ -46,30 +46,7 @@ public class Question20 {
 				}
 				haveSign = true;
 			}
-
-			if (aChar == 'e' || aChar == 'E') {
-				if (!haveNum || haveE || havePoint) {
-					return false;
-				}
-				haveE = true;
-			}
-
-			if (aChar - '0' >= 0 && '9' - aChar >= 0 ) {
-				haveSign = false;
-				havePoint = false;
-				haveNum = true;
-			}
-
-
-			if (aChar == '.') {
-				if (haveE || havePoint) {
-					return false;
-				}
-				havePoint = true;
-			}
-
 		}
-
-		return !( (haveE || havePoint || haveSign) && !haveNum);
+		return false;
 	}
 }
