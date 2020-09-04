@@ -10,7 +10,7 @@ import com.google.gson.Gson;
  * https://leetcode-cn.com/problems/n-queens/
  *
  * @author sinbad on 2020/09/2.
- *
+ * <p>
  * 目前处理结果 仅能返回一次的计算结果
  */
 public class Question51 {
@@ -18,68 +18,44 @@ public class Question51 {
 
 	public static void main(String[] args) {
 
-		System.out.println(new Gson().toJson(new Question51().solveNQueens(4)));
+		System.out.println(new Gson().toJson(new Question51().solveNQueens(5)));
 	}
 
 	public List<List<String>> solveNQueens(int n) {
 
-
-		int[] history = new int[n];
-
 		int[][] position = new int[n][n];
-
-
 		List<List<String>> result = new ArrayList<>();
-
 		print(position, null);
-		checkRow(result, n, position, 0, history, true);
-
-//		int temp = 0;
-//
-//
-//		while (history[0] < n) {
-////
-//			temp++;
-//		}
-
-
+		checkRow(result, position, 0);
 		return result;
 
 	}
 
-	private void checkRow(List<List<String>> result, int n, int[][] position, int row, int[] historyCol, boolean next) {
-		if (row == n) {
+	private void checkRow(List<List<String>> result, int[][] position, int row) {
+		int length = position.length;
+		if (row == length) {
 			recordResult(position, result);
 			return;
 		}
-		int j = 0;
-		if (!next) {
-			j = historyCol[row];
-		}
-		boolean canPut = false;
-		for (; j < n; j++) {
+		boolean canPut;
+		for (int j = 0; j < length; j++) {
 			if (position[row][0] == 1 || position[0][j] == 1) {
 				continue;
 			}
 			canPut = checkCanPut(position, row, j);
 			if (canPut) {
-				break;
+				putPoint(position, row, j, true);
+
+				checkRow(result, position, row + 1);
+
+				putPoint(position, row, j, false);
 			}
 		}
-		if (!canPut) {
-			row = row -1;
-			putPoint(position, row, historyCol[row], false);
-			historyCol[row] = historyCol[row] + 1;
-			checkRow(result, n, position, row, historyCol, false);
-		} else {
-			historyCol[row] = j;
-			putPoint(position, row, j, true);
-			checkRow(result, n, position, row + 1, historyCol, true);
-		}
+
 	}
 
 
-	public void recordResult(int[][] position, List<List<String>> result){
+	public void recordResult(int[][] position, List<List<String>> result) {
 		List<String> subResultList = new ArrayList<>();
 		for (int[] ints : position) {
 			StringBuilder stringBuilder = new StringBuilder();
@@ -87,7 +63,6 @@ public class Question51 {
 				stringBuilder.append(value == 1 ? "Q" : ".");
 			}
 			subResultList.add(stringBuilder.toString());
-
 		}
 		result.add(subResultList);
 	}
@@ -134,7 +109,7 @@ public class Question51 {
 
 
 		int tempCol = col;
-		//向上
+		//向左
 		while (tempCol >= 0) {
 			if (position[row][tempCol] != 1) {
 				if (putFlag) {
@@ -148,7 +123,7 @@ public class Question51 {
 		}
 
 		tempCol = col;
-		//向下
+		//向右
 		while (tempCol < length) {
 			if (position[row][tempCol] != 1) {
 				if (putFlag) {
