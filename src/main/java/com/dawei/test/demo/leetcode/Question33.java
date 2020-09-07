@@ -32,53 +32,53 @@ public class Question33 {
 
 	public int search(int[] nums, int target) {
 
-
-		return search(nums, 0, nums.length -1, target);
+		return 0;
+		//return search(nums, 0, nums.length -1, target);
 	}
 
 
 
 
-	public int search(int[] nums, int start, int end, int target) {
-
-		int mid = (start + end) >> 1;
-
-		if (nums[mid] == target) {
-			return mid;
-		} else if (target < nums[end]) {
-			//中间往后是对的 或者中间往后 部分是对的 这一节是对的
-			if (nums[mid] < target) {
-				start = mid + 1;
-				//正常情况
-				if (target > nums[start]) {
-
-				} else {
-					end = 
-					search(nums, start, )
-				}
-
-
-				return search(nums, start, end, target);
-			}else  {
-				end = mid - 1;
-				return search(nums, start, end, target);
-				}
-
-
-
-
-			}
-
-
-		} else if (target > nums[start]) {
-
-		}
-
-
-
-
-
-		return -1;
-
-	}
+//	public int search(int[] nums, int start, int end, int target) {
+//
+//		int mid = (start + end) >> 1;
+//
+//		if (nums[mid] == target) {
+//			return mid;
+//		} else if (target < nums[end]) {
+//			//中间往后是对的 或者中间往后 部分是对的 这一节是对的
+//			if (nums[mid] < target) {
+//				start = mid + 1;
+//				//正常情况
+//				if (target > nums[start]) {
+//
+//				} else {
+//					end =
+//					search(nums, start, )
+//				}
+//
+//
+//				return search(nums, start, end, target);
+//			}else  {
+//				end = mid - 1;
+//				return search(nums, start, end, target);
+//				}
+//
+//
+//
+//
+//			}
+//
+//
+//		} else if (target > nums[start]) {
+//
+//		}
+//
+//
+//
+//
+//
+//		return -1;
+//
+//	}
 }
