@@ -21,7 +21,7 @@ public class Question347 {
 
 	public static void main(String[] args) {
 		int len = 1;
-		int[] nums = new int[]{ 6,0,1,4,9,7,-3,1,-4,-8,4,-7,-3,3,2,-3,9,5,-4,0};
+		int[] nums = new int[]{6, 0, 1, 4, 9, 7, -3, 1, -4, -8, 4, -7, -3, 3, 2, -3, 9, 5, -4, 0};
 //		Random random = new Random();
 //		for (int i = 0; i < len; i++) {
 //			nums[i] = random.nextInt();
@@ -52,7 +52,7 @@ public class Question347 {
 				resultMap.put(num, orDefault);
 				min = Math.min(orDefault, min);
 			} else {
-				if (resultMap.containsKey(num) || min >= orDefault) {
+				if (resultMap.containsKey(num) || orDefault <= min) {
 					continue;
 				}
 				for (Map.Entry<Integer, Integer> next : resultMap.entrySet()) {
