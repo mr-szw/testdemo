@@ -2,11 +2,11 @@ package com.dawei.test.demo.leetcode;
 
 public class TreeNode {
 
-	int val;
+	Integer val;
 	TreeNode left;
 	TreeNode right;
 
-	TreeNode(int x) {
+	TreeNode(Integer x) {
 		val = x;
 	}
 }
