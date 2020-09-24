@@ -27,22 +27,21 @@ public class Question538 {
 		treeNode0.right = treeNode1;
 		System.out.println(new Gson().toJson(new Question538().convertBST(treeNode)));
 	}
- int sum = 0;
+
+
+	int sum = 0;
 	public TreeNode convertBST(TreeNode root) {
+		//如何倒序遍历二叉树 右 中 左
 		if (root == null) {
 			return null;
 		}
-		TreeNode right = root.right;
-		if (right != null) {
-			sum = right.val + root.val;
-			convertBST(right);
-			root.val = sum;
-		}
-		TreeNode left = root.left;
-		if (left != null) {
-			left.val = left.val + root.val;
-			convertBST(left);
-		}
+
+		convertBST(root.right);
+		System.out.println(root.val);
+		sum += root.val;
+		root.val = sum;
+		convertBST(root.left);
+
 		return root;
 	}
 }
