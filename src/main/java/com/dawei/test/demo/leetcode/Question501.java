@@ -104,11 +104,6 @@ public class Question501 {
 				countNextNum++;
 			}
 		}
-//		int orDefault = markMap.getOrDefault(val, 0);
-//		if (orDefault == 0) {
-//
-//		}
-//		if ()
 	}
 
 }
