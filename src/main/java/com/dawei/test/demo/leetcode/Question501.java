@@ -36,7 +36,7 @@ public class Question501 {
 		Map<Integer, Integer> markMap = new HashMap<>();
 		findMode(markMap, root);
 
-
+		return null;
 
 	}
 
@@ -50,7 +50,7 @@ public class Question501 {
 		if (orDefault == 0) {
 
 		}
-		if ()
+		//if ()
 	}
 
 }
