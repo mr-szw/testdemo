@@ -36,6 +36,7 @@ import org.springframework.util.StringUtils;
 import com.dawei.test.demo.future.ExecutorApi;
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
 import com.dawei.test.demo.pojo.DemoPojo;
+import com.dawei.test.demo.pojo.DemoPojoSub;
 import com.dawei.test.demo.pojo.ResultDto;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Lists;
@@ -79,6 +80,20 @@ public class DemoTestMain implements Cloneable {
 	public static final String MCC_REF = "newhome&preventBack=true";
 
 	public static void main(String[] args) throws Throwable {
+
+		DemoPojoSub demoPojoSub = new DemoPojoSub();
+		demoPojoSub.setTest(1);
+		demoPojoSub.setTest2(2);
+
+		ResultDto<? extends ResultDto<? extends DemoPojo>> resultDto = new ResultDto<>();
+		ResultDto<ResultDto<DemoPojoSub>> pojoSubResultDto = new ResultDto<>();
+		resultDto = pojoSubResultDto;
+
+		DemoPojo demoPojo = demoPojoSub;
+		demoPojo.setName("F");
+
+		DemoPojoSub demoPojoSub2 = (DemoPojoSub) demoPojo;
+
 
 		System.out.println(tableSizeFor(4));
 
@@ -526,7 +541,6 @@ public class DemoTestMain implements Cloneable {
 	static int resultNum = 0;
 
 
-
 	//结果  target   k 最大值  d 需要存在最大值 的最小值
 	public static int method2(int target, int k, int d) {
 		Stack<Integer> subResultList = new Stack<>();
@@ -546,7 +560,7 @@ public class DemoTestMain implements Cloneable {
 
 	public static void methodNext(List<List<Integer>> resultList, Stack<Integer> subResultList, int target, int k) {
 		if (target == 0) {
-			if(!resultList.contains(subResultList)) {
+			if (!resultList.contains(subResultList)) {
 				resultList.add(new ArrayList<>(subResultList));
 			}
 			return;
