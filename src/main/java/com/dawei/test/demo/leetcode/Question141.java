@@ -14,25 +14,24 @@ public class Question141 {
 
 	public static void main(String[] args) {
 
-		int[] position = new int[]{2, 5, 2, 1, 2};
+		ListNode listNode3 = new ListNode(3);
+		ListNode listNode2 = new ListNode(2);
+		ListNode listNode0 = new ListNode(0);
+		ListNode listNode4 = new ListNode(-4);
 		System.out.println(new Gson().toJson(new Question141().hasCycle(null)));
 	}
 
 	public boolean hasCycle(ListNode head) {
 		//1、双指针追逐
 		//2、set去重方式 空间不对
-		int fast;
-		int slow;
-		while (head.next != null) {
-			slow = head.val;
-			if (head.next.next == null) {
-				return false;
-			}
-			fast = head.next.next.val;
-			if (fast == slow) {
+		ListNode slowNode = head;
+		ListNode fastNode = head;
+		while (slowNode != null && fastNode.next != null && fastNode.next.next != null) {
+			fastNode = fastNode.next.next;
+			if (slowNode == fastNode) {
 				return true;
 			}
-			head = head.next;
+			slowNode = slowNode.next;
 		}
 		return false;
 	}
