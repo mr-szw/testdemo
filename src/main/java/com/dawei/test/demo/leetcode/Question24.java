@@ -10,20 +10,32 @@ public class Question24 {
 
 
 	public static void main(String[] args) {
+		ListNode listNode = new ListNode(1);
+		ListNode listNode2 = new ListNode(2);
+		ListNode listNode3 = new ListNode(3);
+		ListNode listNode4 = new ListNode(4);
 
-
+		listNode.next = listNode2;
+		listNode2.next = listNode3;
+		listNode3.next = listNode4;
+		System.out.println(new Question24().swapPairs(listNode));
 	}
 
 	public ListNode swapPairs(ListNode head) {
-		//第一个跟第二个交换
+		/**
+		 * 指向
+		 * ListNode newHead = head.next;
+		 * ListNode newNext = head;
+		 * newNext.next = swapPairs(head.next.next);
+		 * newHead.next = newNext;
+		 * return newHead;
+		 */
 		if (head == null || head.next == null) {
 			return head;
 		}
 		ListNode newHead = head.next;
-		head.next = swapPairs(head.next);
+		head.next = swapPairs(head.next.next);
 		newHead.next = head;
-
-
 		return newHead;
 	}
 }
