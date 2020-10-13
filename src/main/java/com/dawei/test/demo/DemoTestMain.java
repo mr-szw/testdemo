@@ -463,6 +463,20 @@ public class DemoTestMain implements Cloneable {
 	@Test
 	public void testAddTags() {
 
+		int i = 1;
+		i = i++; //2
+
+		int j = i++; //i= 3 j= 3
+
+		// k = 3 + 4 * 4 = 19
+		// i = 5
+		int k = i + ++i * i++;
+
+		System.out.println(i);
+		System.out.println(j);
+		System.out.println(k);
+
+
 		System.out.println(appendTags("1", "2,3,4,5".split(",")));
 
 
