@@ -38,7 +38,7 @@ public class Question202 {
 			n = n / 10;
 			sum += num * num;
 		} while (n > 0);
-		return isHappy(sum);
+		return calculation(sum, hasUseSet);
 	}
 
 }
