@@ -17,7 +17,8 @@ public class Question844 {
 
 		//System.out.println(new Question844().backspaceCompare("ab#c", "ad#c#c"));
 		//System.out.println(new Question844().backspaceCompare("bxj##tw", "bxj###tw"));
-		System.out.println(new Question844().backspaceCompare("bbb", "bb#"));
+		//System.out.println(new Question844().backspaceCompare("bbb", "bb#"));
+		System.out.println(new Question844().backspaceCompare("nzp#o#g", "b#nzp#o#g"));
 	}
 
 
@@ -32,10 +33,12 @@ public class Question844 {
 		while (indexOne >= 0 && indexTwo >= 0) {
 			indexOne = backspaceCompare(charOne, indexOne);
 			indexTwo = backspaceCompare(charTwo, indexTwo);
+
 			if (indexOne == -1 && indexTwo == -1) {
 				return true;
 			}
-			if ((indexOne >= 0 && indexTwo < 0) || (indexOne < 0 && indexTwo >= 0)) {
+			if ((indexOne + indexTwo) < 0 || (indexOne * indexTwo) < 0) {
+
 				return false;
 			}
 			if (charOne[indexOne] != charTwo[indexTwo]) {
