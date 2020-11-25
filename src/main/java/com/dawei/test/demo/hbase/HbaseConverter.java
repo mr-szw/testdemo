@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -18,23 +19,22 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.util.StringUtils;
 
+import com.dawei.test.demo.utils.GsonUtil;
 import com.google.gson.reflect.TypeToken;
-import com.xiaomi.vip.community.common.model.util.GsonUtil;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 public class HbaseConverter {
 
 	private static final Map<String, Map<String, String>> ObjectHbaseCellToFiledMap = new ConcurrentHashMap<>();
 	private static final Map<String, Map<String, String>> ObjectFieldToHbaseCellMap = new ConcurrentHashMap<>();
 	private static final List<String> NEED_FILTERED_FIELD = Stream
-			.of("familyName", "hbaseCellToFiledMap", "filedToHbaseCellMap")
-			.collect(Collectors.toList());
+			.of("familyName", "filedToHbaseCellMap").collect(Collectors.toList());
 
 	/**
 	 * 将result 转化为你的数据对象
-	 * 
+	 *
 	 * @param hbaseResult hbase 的结果数据
 	 * @param objectClazz 返回的对象类型
 	 */
@@ -62,7 +62,7 @@ public class HbaseConverter {
 
 	/**
 	 * 构建put对象
-	 * 
+	 *
 	 * @param rowKey put的rowkey
 	 * @param object 要写入的值
 	 */
@@ -142,17 +142,17 @@ public class HbaseConverter {
 		String typeName = object.getClass().getTypeName();
 
 		if ("java.lang.Float".equals(typeName) || "float".equals(typeName)) {
-			resultByte = Bytes.toBytes((float) object);
+			resultByte = Bytes.toBytes((Float) object);
 		} else if ("java.lang.Double".equals(typeName) || "double".equals(typeName)) {
-			resultByte = Bytes.toBytes((double) object);
+			resultByte = Bytes.toBytes((Double) object);
 		} else if ("java.lang.Short".equals(typeName) || "short".equals(typeName)) {
-			resultByte = Bytes.toBytes((short) object);
+			resultByte = Bytes.toBytes((Short) object);
 		} else if ("java.lang.Integer".equals(typeName) || "int".equals(typeName)) {
-			resultByte = Bytes.toBytes((int) object);
+			resultByte = Bytes.toBytes((Integer) object);
 		} else if ("java.lang.Long".equals(typeName) || "long".equals(typeName)) {
-			resultByte = Bytes.toBytes((long) object);
+			resultByte = Bytes.toBytes((Long) object);
 		} else if ("java.lang.Boolean".equals(typeName) || "boolean".equals(typeName)) {
-			resultByte = Bytes.toBytes((boolean) object);
+			resultByte = Bytes.toBytes((Boolean) object);
 		} else if ("java.lang.String".equals(typeName)) {
 			resultByte = Bytes.toBytes((String) object);
 		}
@@ -200,35 +200,37 @@ public class HbaseConverter {
 		}
 		ObjectHbaseCellToFiledMap.put(resultClazz.getName(), hbaseCellToFiledMap);
 		ObjectFieldToHbaseCellMap.put(resultClazz.getName(), filedToHbaseCellMap);
+		log.info("Mapping: filed map hbase cell info objectName={} mappingInfo={}",
+				resultClazz.getTypeName(), GsonUtil.toJson(filedToHbaseCellMap));
+		log.info("Mapping: hbase cell map filed info objectName={} mappingInfo={}",
+				resultClazz.getTypeName(), GsonUtil.toJson(filedToHbaseCellMap));
 	}
 
 	/**
 	 * 通过用户自定义去获取匹配关系
-	 * 
+	 *
 	 * @param resultClazz 对象类
 	 */
 	private static <T> void doBuildFiledCellMapByCustom(Class<T> resultClazz) {
 		try {
-			Field hbaseCellToFiledMapField = resultClazz.getDeclaredField("hbaseCellToFiledMap");
 			Field filedToHbaseCellMapField = resultClazz.getDeclaredField("filedToHbaseCellMap");
-			hbaseCellToFiledMapField.setAccessible(true);
 			filedToHbaseCellMapField.setAccessible(true);
-			String hbaseCellToFiledMapStr = (String) hbaseCellToFiledMapField.get(resultClazz);
 			String filedToHbaseCellMapStr = (String) filedToHbaseCellMapField.get(resultClazz);
-			if (!StringUtils.isEmpty(hbaseCellToFiledMapStr)
+			if (!StringUtils.isEmpty(filedToHbaseCellMapStr)
 					&& !StringUtils.isEmpty(filedToHbaseCellMapStr)) {
-				Map<String, String> hbaseCellToFiledMap = GsonUtil.fromJson(hbaseCellToFiledMapStr,
+				Map<String, String> hbaseCellToFiledMap = GsonUtil.fromJson(filedToHbaseCellMapStr,
 						new TypeToken<HashMap<String, String>>() {
 						}.getType());
 				ObjectHbaseCellToFiledMap.put(resultClazz.getName(), hbaseCellToFiledMap);
-				Map<String, String> filedToHbaseCellMap = GsonUtil.fromJson(filedToHbaseCellMapStr,
-						new TypeToken<HashMap<String, String>>() {
-						}.getType());
+				Set<Map.Entry<String, String>> entrySet = hbaseCellToFiledMap.entrySet();
+				Map<String, String> filedToHbaseCellMap = new HashMap<>();
+				for (Map.Entry<String, String> mapEntry : entrySet) {
+					filedToHbaseCellMap.put(mapEntry.getValue(), mapEntry.getKey());
+				}
 				ObjectFieldToHbaseCellMap.put(resultClazz.getName(), filedToHbaseCellMap);
 			}
 		} catch (NoSuchFieldException | IllegalAccessException exception) {
 			throw new RuntimeException("Not Custom Set Mapping");
 		}
 	}
-
 }
