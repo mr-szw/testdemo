@@ -10,8 +10,6 @@ public class Question766 {
 
 
 	public static void main(String[] args) {
-"[[11,74,0,93]" +
- "[40,11,74,7]]"
 	}
 
 	public boolean isToeplitzMatrix(int[][] matrix) {
