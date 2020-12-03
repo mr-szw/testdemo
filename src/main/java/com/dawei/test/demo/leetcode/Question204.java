@@ -41,15 +41,15 @@ public class Question204 {
 
 
 	public int countPrimes(int n) {
+		//啥啥啥算法 要是你不是然后你乘完的别的数不是质数
+		//高效 2 * 1 /* 2 /* 3 /* 4 /* 5 一下子覆盖挺多
 		boolean[] markAry = new boolean[n];
 		Arrays.fill(markAry, true);
 		int count = 0;
-
 		for (int i = 2; i * i < n; i++) {
 			if (markAry[i]) {
 				for (int j = i * i; j < n; j = i + j) {
 					markAry[j] = false;
-
 				}
 			}
 		}
