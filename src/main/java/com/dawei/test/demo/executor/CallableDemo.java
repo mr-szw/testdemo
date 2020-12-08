@@ -13,9 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.util.CollectionUtils;
 
 import com.alibaba.dubbo.common.json.JSON;
@@ -35,11 +42,24 @@ public class CallableDemo {
 
 	public static void main(String[] args) throws Exception {
 
+		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2
+				, 3, 10, TimeUnit.SECONDS,
+				new ArrayBlockingQueue<>(3), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
+
+		for (int i = 0; i < 10; i++) {
+			threadPoolExecutor.execute(TestClass::new);
+		}
+
+		threadPoolExecutor.shutdown();
+
 		CallableDemo callableDemo = new CallableDemo();
 		//callableDemo.test1();
 		callableDemo.test2();
 
 	}
+
+
+
 
 	private void test2() throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,7 +90,7 @@ public class CallableDemo {
 		System.out.println(Arrays.toString(split));
 		for (String entry : split) {
 			boolean itemDataList = entry.contains("itemDataList");
-			if(itemDataList) {
+			if (itemDataList) {
 				System.out.println(entry);
 				String substring = entry.substring(entry.indexOf(":") + 1);
 				List<Map<String, String>> mapList = new Gson()
@@ -94,8 +114,6 @@ public class CallableDemo {
 }
 
 
-
-
 class TestClass implements Callable<String> {
 
 	/**
@@ -104,10 +122,11 @@ class TestClass implements Callable<String> {
 	 * @return computed result
 	 * @throws Exception if unable to compute a result
 	 */
-	@Override public String call() throws Exception {
+	@Override
+	public String call() throws Exception {
 
 		String name = Thread.currentThread().getName();
-		String result = name + UUID.randomUUID().toString();
+		String result = name + "---" +  UUID.randomUUID().toString();
 		System.out.println(result);
 
 		return result;
