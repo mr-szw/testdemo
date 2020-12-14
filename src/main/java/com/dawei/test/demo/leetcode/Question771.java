@@ -25,7 +25,7 @@ public class Question771 {
 		}
 		int count = 0;
 		for (char c : S.toCharArray()) {
-			if (stonesSet.contains(c)) {Bea
+			if (stonesSet.contains(c)) {
 				count++;
 			}
 		}
