@@ -17,10 +17,14 @@ public class Question321 {
 		 * [7,6,1,9,3,2,3,1,1]
 		 * [4,0,9,9,0,5,5,4,7]
 		 * 9
+		 *
+		 * [2,5,6,4,4,0]
+		 * [7,3,8,0,6,5,7,6,2]
+		 * 15
 		 */
-		int[] nums1 = {7,6,1,9,3,2,3,1,1};
-		int[] nums2 = {4,0,9,9,0,5,5,4,7};
-		System.out.println(new Gson().toJson(new Question321().maxNumber(nums1, nums2, 9)));
+		int[] nums1 = {6, 7};
+		int[] nums2 = {6, 0, 4};
+		System.out.println(new Gson().toJson(new Question321().maxNumber(nums1, nums2, 5)));
 	}
 
 
@@ -31,7 +35,6 @@ public class Question321 {
 
 		int needNumFor1Min = Math.max(0, k - nums2.length);
 		int needNumFor1Max = Math.min(nums1.length, k);
-
 
 		for (int i = needNumFor1Min; i <= needNumFor1Max; i++) {
 			int[] needNums1 = getHelpNum(nums1, i);
@@ -59,13 +62,15 @@ public class Question321 {
 		int[] result = new int[needNum];
 		result[index] = nums[0];
 		for (int i = 1; i < nums.length; i++) {
-			while (index >= 0 && deleteNum > 0 && result[index] < nums[i] && length - i >= deleteNum) {
+			while (index >= 0 && deleteNum > 0 && result[index] < nums[i]) {
 				index--;
 				deleteNum--;
 			}
 			if (index < needNum - 1) {
 				index++;
 				result[index] = nums[i];
+			} else {
+				deleteNum--;
 			}
 		}
 		return result;
@@ -86,11 +91,26 @@ public class Question321 {
 		int num1Index = 0;
 		int num2Index = 0;
 		while (num2Index < num2Length && num1Index < num1Length) {
-			if (nums1[num1Index] < nums2[num2Index]) {
-				result[num++] = (nums2[num2Index++]);
+			int value;
+			int num1 = nums1[num1Index];
+			int num2 = nums2[num2Index];
+
+			if (num1 < num2) {
+				value = num2;
+				num2Index++;
+			} else if (num1 > num2) {
+				value = num1;
+				num1Index++;
 			} else {
-				result[num++] = (nums1[num1Index++]);
+				value = num1;
+				int wetherNum = wetherNum(nums1, nums2, num1Index + 1, num2Index + 1);
+				if (wetherNum == 1) {
+					num1Index++;
+				} else {
+					num2Index++;
+				}
 			}
+			result[num++] = value;
 		}
 		while (num1Index < num1Length) {
 			result[num++] = nums1[num1Index++];
@@ -121,6 +141,40 @@ public class Question321 {
 			index++;
 		}
 		return nums2;
+	}
+
+
+	//选哪边
+	private int wetherNum(int[] nums1, int[] nums2, int index1, int index2) {
+
+		int length1 = nums1.length;
+		int length2 = nums2.length;
+
+		//2后面再比较
+		if (index1 >= length1) {
+			return 2;
+		}
+		//1后面再比较
+		if (index2 >= length2) {
+			return 1;
+		}
+
+		while (index1 < length1 && index2 < length2) {
+			int num1 = nums1[index1];
+			int num2 = nums2[index2];
+			if (num1 == num2) {
+				index1++;
+				index2++;
+			} else {
+				if (num1 > num2) {
+					return 1;
+				} else {
+					return 2;
+				}
+			}
+		}
+		//1 2 都一样
+		return 1;
 	}
 
 }
