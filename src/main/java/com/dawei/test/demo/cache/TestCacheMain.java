@@ -11,13 +11,12 @@ public class TestCacheMain {
         try {
 
             GuavaCacheDemo instance = GuavaCacheDemo.getInstance();
-            for (int i = 0; i < 20; i++) {
-                instance.putValue("key" + i, "value" + i);
-                System.out.println("instance.getSize()  " + instance.getSize());
-                System.out.println("instance.getValue()   " + instance.getValue("key" + i));
-            }
 
-            Thread.sleep(10000);
+            instance.putValue(null, null);
+
+
+            System.out.println(instance.getLoadingCache().stats()); //获取统计信息
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Exception e) {
