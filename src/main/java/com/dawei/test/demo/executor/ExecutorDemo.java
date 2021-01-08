@@ -45,7 +45,6 @@ public class ExecutorDemo {
 	public static void main(String[] args) throws ExecutionException, InterruptedException {
 
 
-		Executor
 
 		// 创建 固定数目的线程池
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
