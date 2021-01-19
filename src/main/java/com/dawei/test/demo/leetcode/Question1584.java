@@ -1,13 +1,6 @@
 package com.dawei.test.demo.leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
-
 import com.google.gson.Gson;
-
-import lombok.val;
 
 /**
  * 1584. 连接所有点的最小费用
@@ -20,11 +13,12 @@ public class Question1584 {
 
 	public static void main(String[] args) {
 		int[] ints = {};
-		System.out.println(new Gson().toJson(new Question1584().permuteUnique(ints)));
+		System.out.println(new Gson().toJson(new Question1584().minCostConnectPoints(new int[][]{})));
 	}
 
 	public int minCostConnectPoints(int[][] points) {
 
+		return 0;
 	}
 
 }
