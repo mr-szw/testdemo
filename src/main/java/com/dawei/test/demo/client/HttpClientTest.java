@@ -60,7 +60,7 @@ public class HttpClientTest {
 
 		//new HttpClientTest().doRequest();
 		Map<String, Object> paramterMap = new HashMap<>();
-		//paramterMap.put("demandId", "3");
+		//paramterMap.put("demandId"	, "3");
 		paramterMap.put("category", "212");
 		//paramterMap.put("hmsr", "JzApp");
 		paramterMap.put("cpid", "357647970730583");
