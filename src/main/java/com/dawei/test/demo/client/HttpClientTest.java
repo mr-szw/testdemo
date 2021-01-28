@@ -63,6 +63,75 @@ public class HttpClientTest {
 	// 设置客户端发起TCP连接请求的超时时间
 	private static final int CONN_SERVER_TIMEOUT = 100;
 	// 设置客户端等待服务端返回数据的超时时间
+
+	public static final Logger logger = LoggerFactory.getLogger(HttpClientTest.class);
+
+	public static void main(String[] args) throws IOException {
+
+
+		CloseableHttpClient httpClient = getHttpClient("", 8888);
+		CloseableHttpResponse httpResponse = httpClient.execute(new HttpGet("http://.com"));
+
+
+		//new HttpClientTest().doRequest();
+		Map<String, Object> paramterMap = new HashMap<>();
+		//paramterMap.put("demandId"	, "3");
+		paramterMap.put("category", "212");
+		//paramterMap.put("hmsr", "JzApp");
+		paramterMap.put("cpid", "357647970730583");
+		// String rawText = new HttpClientTest().doRequestFunction("POST", paramterMap, "https://jz-csapi.djtest.cn/customer/online/demand/content");
+		// String rawText = new HttpClientTest().doRequestFunction("POST", paramterMap, "https://jz-csapi.djtest.cn/customer/online/demand/broadcast");
+
+
+		// new HttpClientTest().doRequest();
+	}
+
+
+	public void doRequest() {
+		//String urlPath = "http://192.168.150.24/lottery/drawn";
+		//String urlPath = "http://lottery.dawei.com/lottery/drawn";
+		//String urlPath = "https://jz-csapi.djtest.cn/customer/online/demand/content";
+		//String urlPath = "https://jz-csapi.djtest.cn/customer/online/demand/detail";
+		String urlPath = "https://jz-csapi.djtest.cn/customer/online/demand/designate";
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		List<NameValuePair> nameValuePairList = new ArrayList<>();
+//        BasicNameValuePair basicNameValuePair1 = new BasicNameValuePair("activityId", "12314");
+//        BasicNameValuePair basicNameValuePair2 = new BasicNameValuePair("passportId", "12314");
+//        nameValuePairList.add(basicNameValuePair1);
+//        nameValuePairList.add(basicNameValuePair2);
+
+		// BasicNameValuePair basicNameValuePair2 = new BasicNameValuePair("demandId", "3");
+		BasicNameValuePair basicNameValuePair3 = new BasicNameValuePair("cpid", "357647970730583");
+		BasicNameValuePair basicNameValuePair4 = new BasicNameValuePair("category", "212");
+		nameValuePairList.add(basicNameValuePair3);
+		nameValuePairList.add(basicNameValuePair4);
+		try {
+			UrlEncodedFormEntity encodedFormEntity = new UrlEncodedFormEntity(nameValuePairList, Consts.UTF_8);
+			String params = EntityUtils.toString(encodedFormEntity);
+			HttpGet httpGet = new HttpGet(urlPath + "?" + params);
+			CloseableHttpResponse response = httpClient.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			String content = EntityUtils.toString(entity, "utf-8");
+			System.out.println(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				httpClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	//设置客户端从连接池获取链接的超时时间
+	private static final int GET_CONN_TIMEOUT = 20;
+	//设置客户端发起TCP连接请求的超时时间
+	private static final int CONN_SERVER_TIMEOUT = 20;
+	//设置客户端等待服务端返回数据的超时时间
+>>>>>>> 9cf97d6ee4da096d56b47b50816855941a826b73
 	private static final int WAIT_SERVER_TIMEOUT = 100;
 
 	// 总的大池子的连接数
