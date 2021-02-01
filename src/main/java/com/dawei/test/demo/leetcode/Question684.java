@@ -1,11 +1,6 @@
 package com.dawei.test.demo.leetcode;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 684. 冗余连接
@@ -21,7 +16,6 @@ import java.util.Arrays;
  */
 public class Question684 {
 
-<<<<<<< HEAD
 
 	public static void main(String[] args) {
 
@@ -29,38 +23,6 @@ public class Question684 {
 
 	}
 
-	public int[] findRedundantConnection(int[][] edges) {
-
-
-		int length = edges.length;
-
-		boolean[] visited = new boolean[length];
-
-		Map<Integer, List<Integer>> edgeListMap = new HashMap<>();
-
-		for (int[] edge : edges) {
-			List<Integer> itemList = edgeListMap.getOrDefault(edge[0], new ArrayList<>());
-			itemList.add(edge[1]);
-			edgeListMap.put(edge[0], itemList);
-		}
-		for (int i = 0; i < length; i++) {
-
-
-			visited[i] = true;
-			List<Integer> itemList = edgeListMap.get(i + 1);
-
-		}
-		return new int[]{};
-	}
-
-
-
-
-=======
-	public static void main(String[] args) {
-		System.out.println(Arrays.toString(new Question684().findRedundantConnection(
-				new int[][] { { 1, 2 }, { 2, 3 }, { 3, 4 }, { 1, 4 }, { 1, 5 } })));
-	}
 
 	// 连通器 记录每个数据能够到达的最终位置 通过判断多个数据的最终位置判断是否构成串联
 	public int[] findRedundantConnection(int[][] edges) {
@@ -101,5 +63,4 @@ public class Question684 {
 		return unionFlag;
 	}
 
->>>>>>> c452d0b03dfde8d78cba8a0f62b1f49eef1351f3
 }

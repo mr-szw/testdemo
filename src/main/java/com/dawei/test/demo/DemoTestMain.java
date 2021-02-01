@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import com.dawei.test.demo.down.DownStrategyConfig;
 import com.dawei.test.demo.future.ExecutorApi;
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
 import com.dawei.test.demo.pojo.DemoPojo;
@@ -40,6 +41,7 @@ import com.dawei.test.demo.pojo.DemoPojoSub;
 import com.dawei.test.demo.pojo.ResultDto;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
@@ -273,6 +275,30 @@ public class DemoTestMain implements Cloneable {
 
 		System.out.println("Wait stop ");
 	}
+
+	@Test
+	public void testGson()   {
+		List<DemoPojo> demoPojoList = new ArrayList<>();
+		DemoPojo demoPojo = new DemoPojo();
+		demoPojo.setName("大伟");
+		demoPojo.setBirthday(new Date());
+		List<String> testList = new ArrayList<>();
+		testList.add("23");
+		testList.add("4535463erg");
+		demoPojo.setPathList(testList);
+		demoPojoList.add(demoPojo);
+
+		Gson gson = new Gson();
+		String toJson = gson.toJson(demoPojoList);
+
+
+		List<DemoPojo> demoPojoListResult = gson.fromJson(toJson, new TypeToken<List<DemoPojo>>() {
+		}.getType());
+
+
+		System.out.println(demoPojoListResult);
+	}
+
 
 
 	private static void testFuture() {

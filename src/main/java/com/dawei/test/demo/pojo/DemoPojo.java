@@ -2,6 +2,7 @@ package com.dawei.test.demo.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,6 +19,8 @@ public class DemoPojo implements Serializable {
     private Date birthday;
 
     private int test;
+
+    private List<String> pathList;
 
 
 }
