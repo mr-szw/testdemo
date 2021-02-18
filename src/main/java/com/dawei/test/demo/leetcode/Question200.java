@@ -5,6 +5,7 @@ import java.util.Random;
 /**
  * 岛屿数量
  *
+ * 并查集 搞连通
  * @author sinbad on 2020/08/19.
  */
 public class Question200 {
@@ -24,8 +25,6 @@ public class Question200 {
 
 
 	public int numIslands(char[][] grid) {
-
-
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 
