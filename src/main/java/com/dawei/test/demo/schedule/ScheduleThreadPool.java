@@ -13,13 +13,14 @@ public class ScheduleThreadPool {
 
 	public static void main(String[] args) {
 
-		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-		scheduledExecutorService.schedule(() -> {
+		ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+		//等100毫秒然后每200毫秒执行一次
+		scheduledExecutorService.scheduleAtFixedRate(() -> {
 
 			System.out.println(new Date() + "  " + Thread.currentThread());
 
 
-		}, 5, TimeUnit.MINUTES);
+		}, 100,200, TimeUnit.MILLISECONDS);
 
 
 	}

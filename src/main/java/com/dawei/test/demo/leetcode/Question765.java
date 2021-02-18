@@ -12,10 +12,22 @@ import com.google.gson.Gson;
 public class Question765 {
 
 	public static void main(String[] args) {
+
+		System.out.println(1 & 0);
+		System.out.println(2 & 0);
+		System.out.println(3 & 0);
+
+		System.out.println(1 & 1);
+		System.out.println(2 & 1);
+		System.out.println(3 & 1);
+
+
 		// int[] position = new int[] { 2, 5, 2, 1, 2 };
 		int[] position = new int[] { 3, 2, 0, 1 };
 		System.out.println(new Gson().toJson(new Question765().minSwapsCouples(position)));
 	}
+
+
 	//
 	// public int minSwapsCouples(int[] row) {
 	//
