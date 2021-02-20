@@ -20,10 +20,16 @@ public class Question11 {
 		}
 		System.out.println(new Question11().maxArea(new int[] { 1, 3, 43, 5, 3 }));
 	}
-
+	//先来个暴力遍历
 	public int maxArea(int[] height) {
-
-		return 0;
+		int maxResult = 0;
+		int length = height.length;
+		for (int i= 0; i <= (length - 2); i++) {
+			for (int j=i + 1; j <= (length -1); j++) {
+				maxResult = Math.max(maxResult, (j-i) * Math.min(height[i], height[j]));
+			}
+		}
+		return maxResult;
 	}
 
 }
