@@ -27,7 +27,7 @@ public class Question494 {
 		dp[0][1] = -nums[0]; 
 		
 		for (int i = 1; i < nums.length; i++) {
-			dp[i][0] =
+			dp[i][0] = 1;
 		}
 		
 		

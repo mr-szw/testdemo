@@ -46,7 +46,7 @@ import com.dawei.test.demo.spring.aop.pojo.MathCalculator;
  * 				->AbstractAdvisorAutoProxyCreator
  * 					->AbstractAutoProxyCreator
  * 							implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware
- * 						关注后置处理器（在bean初始化完成前后做事情）、自动装配BeanFactory
+ * 						SmartInstantiationAwareBeanPostProcessor关注后置处理器（在bean实例化完成前后做事情）、BeanFactoryAware自动装配BeanFactory
  *
  * AbstractAutoProxyCreator.setBeanFactory()
  * AbstractAutoProxyCreator.有后置处理器的逻辑；
@@ -98,9 +98,8 @@ import com.dawei.test.demo.spring.aop.pojo.MathCalculator;
  * 								拿到所有后置处理器，如果是InstantiationAwareBeanPostProcessor;
  * 								就执行postProcessBeforeInstantiation
  * 							if (bean != null) {
-bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
-}
- *
+ * 								bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+ *							}
  * 					2）、doCreateBean(beanName, mbdToUse, args);真正的去创建一个bean实例；和3.6流程一样；
  * 					3）、
  *
