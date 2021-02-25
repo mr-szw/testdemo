@@ -40,8 +40,9 @@ public class QuickSort {
 
 	public static void main(String[] args) {
 		int[] arr = new int[] { 10, 6, 11, 4, 9, 8, 13, 15 };
+		new QuickSort().testQuickSort(arr);
 		// quickSort(arr);
-		sort(arr);
+		// sort(arr);
 		System.out.println(Arrays.toString(arr));
 	}
 
@@ -71,7 +72,40 @@ public class QuickSort {
 			sortQuick(arr, 0, quickIndex - 1);
 			sortQuick(arr, quickIndex + 1, end);
 		}
+	}
 
+	// 快排
+	// 搜索找位置 然后就行了
+
+	public int getMidIndex(int[] nums, int left, int right) {
+		int target = nums[left];
+
+		while (left < right) {
+
+			while (left < right && nums[right] >= target) {
+				right--;
+			}
+			nums[left] = nums[right];
+
+			while (left < right && nums[left] <= target) {
+				left++;
+			}
+			nums[right] = nums[left];
+		}
+		nums[left] = target;
+		return left;
+	}
+
+	public void testQuickSort(int[] nums, int left, int right) {
+		if (left < right) {
+			int midIndex = getMidIndex(nums, left, right);
+			testQuickSort(nums, left, midIndex - 1);
+			testQuickSort(nums, midIndex + 1, right);
+		}
+	}
+
+	public void testQuickSort(int[] nums) {
+		testQuickSort(nums, 0, nums.length - 1);
 	}
 
 }
