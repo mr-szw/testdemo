@@ -1,4 +1,4 @@
-package com.dawei.test.demo.Interview;
+package com.dawei.test.demo.algorithm;
 
 import java.util.Scanner;
 
@@ -14,6 +14,7 @@ public class InterviewTopic {
 
     @Test
     public void testMain() {
+
 
         //1、闰年
         //leapYear();

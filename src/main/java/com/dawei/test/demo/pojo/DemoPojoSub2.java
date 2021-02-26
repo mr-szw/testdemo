@@ -8,11 +8,10 @@ import lombok.Data;
  * @Date: 2018/7/19
  */
 @Data
-public class DemoPojoSub extends DemoPojo {
+public class DemoPojoSub2 extends DemoPojo {
 
 
-    private int test2;
+	private String subStr2 = "二号种子";
 
 
-    private String subStr1 = "一号种子";
 }
