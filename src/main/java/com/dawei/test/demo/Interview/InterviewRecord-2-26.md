@@ -95,23 +95,50 @@
                 scan用于增量迭代
                 
         
-   ![Image text](https://img2020.cnblogs.com/other/268224/202007/268224-20200719105137483-1089514405.jpg）
+   ![Image text](https://img2020.cnblogs.com/other/268224/202007/268224-20200719105137483-1089514405.jpg)
              
             scan有啥问题？
-                
                 keys和scan的区别
-                    不能遍历所有槽位    
+                    scan仅会返回少量元素，不会出现阻塞
+                    keys命令被用于一个大的数据库的时候会阻塞查询
+                    SMEMBERS再处理大的集合键时也会阻塞服务
+                scan在遍历的时候，仅会返回很少，但是其增量遍历的过程中可能之前遍历的键值已经被修改
         
         
-   #####Q6：http状态码499，什么原因、如何解决
+   #####Q6：响应状态码499，什么原因、如何解决
    A6：
-   
+        
+        499非http定义的响应状态码，是nginx层定义的
+        ngx_string(ngx_http_error_495_page), /* 495, https certificate error */
+        ngx_string(ngx_http_error_496_page), /* 496, https no certificate */
+        ngx_string(ngx_http_error_497_page), /* 497, http to https */
+        ngx_string(ngx_http_error_404_page), /* 498, canceled */
+        ngx_null_string,                    /* 499, client has closed connection */
+        
+        /*
+        * HTTP does not define the code for the case when a client closed
+        * the connection while we are processing its request so we introduce
+        * own code to log such situation when a client has closed the connection
+        * before we even try to send the HTTP header to it
+        */
+        状态码是 Nginx 自己定义，用来 记录（你没看错，就是记录一下） 服务端向客户端发送 HTTP 请求头之前，客户端已经关闭连接的一种情况
+
        原因:
             客户端主动与服务器断开链接
+            最常见的场景就是 timeout 设置不合理，Nginx 把请求转发上游服务器，上游服务器慢吞吞的处理，客户端等不及了主动断开链接，Nginx 就负责记录了 499
             
        解决：
             1、提供服务响应力 降低服务器耗时
-            2、客户端使用长链接不断开
+            2、当然还有配置 proxy_ignore_client_abort 参数为 on 来解决的
+                让代理服务端不要主动关闭客户端的连接）。但是这样也有一定的风险，会拖垮服务器。
+                    发生这个错误，如果服务器 CPU 和 Memory 不算太高，一般是数据库和程序的问题，数据库处理较慢或者程序线程较低。
+                proxy_ignore_client_abort:
+                    Determines whether the connection with a proxied server should be closed when a client closes the connection without waiting for a response.
+                    翻译：当一个客户端关闭连接而不等待响应时，确定与代理服务器的连接是否应该关闭。
+            3、让客户端使用长链接不断开 应该也可行吧
        
+        nginx 413状态码
+            nginx限制的默认文件上传大小是1m 超出限制报413
+            通过修改client_max_body_size，重启服务可以配置 
   
   #####Q7:算法题 二维数组找指定值
