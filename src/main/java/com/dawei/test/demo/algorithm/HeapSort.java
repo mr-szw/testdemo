@@ -94,16 +94,10 @@ public class HeapSort {
 			lastParent--;
 		}
 
-
-
-
 		//heapSort(array);
 		System.out.print("排序后:\t");
 		System.out.println(Arrays.toString(array));
 	}
-
-
-	public static void buildHeap(int[] tree) {}
 
 
 	//这里进行堆的维护

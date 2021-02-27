@@ -1,5 +1,8 @@
 package com.dawei.test.demo.leetcode;
 
+import lombok.Data;
+
+@Data
 public class TreeNode {
     int val;
     TreeNode left;
