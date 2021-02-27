@@ -1,8 +1,9 @@
 package com.dawei.test.demo.algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -42,6 +43,38 @@ public class BubbleSort {
         bubble(array);
         System.out.print("排序后:\t");
         System.out.println(Arrays.toString(array));
+    }
+
+
+    public List<Integer> addToArrayForm(int[] A, int K) {
+        String other = String.valueOf(K);
+        int otherLength = other.length();
+        int length = A.length;
+
+        List<Integer> resultList = new ArrayList<>();
+
+
+        int otherIndex = otherLength - 1;
+        int numIndex = length - 1;
+
+        int next = 0;
+        while(otherIndex >= 0 && numIndex >=0) {
+            int result = A[numIndex--] + (other.charAt(otherIndex--) - '0') + next;
+            next = result / 10;
+            result = result -  next * 10;
+            resultList.add(result);
+
+
+        }
+        while(numIndex >=0) {
+            resultList.add(A[numIndex--]);
+        }
+        while(otherIndex >=0) {
+            resultList.add((other.charAt(numIndex--) - '0'));
+        }
+        Collections.reverse(resultList);
+
+        return resultList;
     }
 
 }
