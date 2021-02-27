@@ -1,12 +1,6 @@
 package com.dawei.test.demo.leetcode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-
-import org.checkerframework.checker.units.qual.min;
 
 /**
  * 322. 零钱兑换 https://leetcode-cn.com/problems/coin-change/
