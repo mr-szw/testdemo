@@ -80,7 +80,6 @@
                         } else {
                             return success;
                         }
-                        
                     } finaily {
                         jedis.unWatch("key");
                     }         
@@ -92,9 +91,7 @@
                     2、双key 探测key失效加锁更新数据，未失效使用 探测key有更小的失效时间
         4、如何查找某些前缀开头的元素 https://www.cnblogs.com/cheyunhua/p/13343429.html
             scan  
-                scan用于增量迭代
-                
-        
+                scan用于增量迭代            
    ![Image text](https://img2020.cnblogs.com/other/268224/202007/268224-20200719105137483-1089514405.jpg)
              
             scan有啥问题？

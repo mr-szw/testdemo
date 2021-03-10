@@ -94,8 +94,6 @@ public class DoubleTree {
 			root = root.left;
 			treeNodeStack.add(root);
 		}
-
-
 		while (!treeNodeStack.isEmpty()) {
 			TreeNode pop = treeNodeStack.pop();
 			if (pop.right != null) {
@@ -182,18 +180,14 @@ public class DoubleTree {
 	 *	非递归
 	 */
 	private void  lostRootRangNo(TreeNode root, List<Integer> pathList) {
-
 		if (root == null) {
 			return;
 		}
 		Stack<TreeNode> treeNodeStack = new Stack<>();
-
-
 		while (root.left != null) {
 			treeNodeStack.push(root.left);
 			root = root.left;
 		}
-
 		TreeNode lastDoNode = null;
 		while (!treeNodeStack.isEmpty()) {
 
@@ -216,6 +210,30 @@ public class DoubleTree {
 	}
 
 
+
+
+	//跟节点先入队
+
+	//二叉树深度遍历
+	private void getPath( TreeNode root, List<List<Integer>> markPathList, Stack<Integer> pathList) {
+		if (root.left == null && root.right == null) {
+			markPathList.add(new ArrayList<>(pathList));
+			return;
+		}
+
+		if(root.left != null) {
+			pathList.add(root.left.val);
+			getPath(root.left, markPathList, pathList);
+			pathList.pop();
+		}
+
+		if(root.right != null) {
+			pathList.add(root.right.val);
+			getPath(root.right, markPathList, pathList);
+			pathList.pop();
+		}
+
+	}
 
 
 	static class TreeNode {
