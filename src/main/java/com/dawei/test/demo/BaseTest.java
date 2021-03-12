@@ -1,6 +1,7 @@
 package com.dawei.test.demo;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -9,12 +10,12 @@ import java.util.stream.Collectors;
 import com.dawei.test.demo.pojo.DemoPojo;
 import com.dawei.test.demo.utils.GsonUtil;
 
-import lombok.Synchronized;
-
 
 public class BaseTest {
 
 	public static void main(String[] args) {
+		HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
+		objectObjectHashMap.keySet().iterator().next();
 
 		int num = 0;
 		String numStr = String.valueOf(num);
@@ -89,6 +90,7 @@ public class BaseTest {
 	// }
 
 	public static void method(int num, String numStr, StringBuffer numStrBuffer) {
+
 
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		Iterator<StackTraceElement> iterator = Arrays.stream(stackTrace).iterator();
