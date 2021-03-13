@@ -1,8 +1,10 @@
 package com.dawei.test.demo;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,16 @@ public class BaseTest {
 
 	public static void main(String[] args) {
 
+		try {
+
+			method2();
+		}catch (Exception e) {
+			System.out.println("sss");
+			e.printStackTrace();
+		}
+
+		Map<String, Integer> hashMap = new HashMap<>();
+		hashMap.put("1", 1);
 		int num = 0;
 		String numStr = String.valueOf(num);
 		StringBuffer numStrBuffer = new StringBuffer(num);
@@ -99,6 +111,18 @@ public class BaseTest {
 		numStr = numStr + "-" + num;
 		numStrBuffer.append(numStr);
 
+	}
+
+
+
+	public static void method2() {
+		try {
+			System.out.println(1 / 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw  e;
+		}
 	}
 
 }
