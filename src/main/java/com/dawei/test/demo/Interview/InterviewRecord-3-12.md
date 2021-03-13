@@ -60,9 +60,12 @@
    #####Q6: CyclicBarrier、 CountDownLatch、Semaphore 具体是啥作用 如何实现的
    #####A6: 
             https://blog.csdn.net/weixin_43113679/article/details/95501156
-
-            
-           
+            Semaphore
+                FairSync 或 NonfairSync 锁的使用 
+                for(;;;) {
+                    unsafe.compareAndSwapInt(this, stateOffset, expect, update);
+                }
+                
    
    #####Q7: ThreadLocal 底层数据结构 如何保证不内存泄漏  
    #####A7: 
