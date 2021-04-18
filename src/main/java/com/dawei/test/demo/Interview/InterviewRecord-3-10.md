@@ -2,16 +2,16 @@
 
 ### 面试公司 -- 今日头条
 
-
 #### 一面：设计技术点较零碎并且不进行深度问
-   
-   
-   #####Q1: 自我介绍
-   A1: 巴拉巴拉
-   
-   #####Q2: TIME_WAIT 和 CLOSE_WAIT 
-   A2: https://blog.csdn.net/cpcpcp123/article/details/51260031
-        
+
+##### Q1: 自我介绍
+
+A1: 巴拉巴拉
+
+##### Q2: TIME_WAIT 和 CLOSE_WAIT
+
+A2: https://blog.csdn.net/cpcpcp123/article/details/51260031
+
         TCP协议规定，对于已经建立的连接，网络双方要进行四次握手才能成功断开连接，如果缺少了其中某个步骤，将会使连接处于假死状态，连接本身占用的资源不会被释放。
         网络服务器程序要同时管理大量连接，所以很有必要保证无用连接完全断开，否则大量僵死的连接会浪费许多服务器资源。
         
@@ -60,38 +60,88 @@
         2.服务器保持了大量CLOSE_WAIT状态，简单来说CLOSE_WAIT数目过大是由于被动关闭连接处理不当导致的。
         因为linux分配给一个用户的文件句柄是有限的，而TIME_WAIT和CLOSE_WAIT两种状态如果一直被保持，那么意味着对应数目的通道就一直被占着；
         一旦达到句柄数上限，新的请求就无法被处理了，接着就是大量Too Many Open Files异常，Tomcat崩溃。
-   
-   #### 偷一下别人的阿里面试题
-   
-   #####Q1: aop在spring中的实现
-   #####A1: 
+
+#### 偷一下别人的阿里面试题
+
+##### Q1: aop在spring中的实现
+
+##### A1:
+
             1、扫描
             2、代理生成
             3、拦截
-   
-   #####Q1: 解释jdk和cglib动态代理的实现及区别
-   #####A1: 
+
+##### Q1: 解释jdk和cglib动态代理的实现及区别
+
+##### A1:
+
             1、jdk动态代理
             2、cglib动态代理
-   
-   #####Q1: Spring的事务是如何实现的
-   #####A1: 
+            java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。
+
+而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理
+
+1、如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP 2、如果目标对象实现了接口，可以强制使用CGLIB实现AOP
+3、如果目标对象没有实现了接口，必须采用CGLIB库，spring会自动在JDK动态代理和CGLIB之间转换
+
+（1）JDK动态代理只能对实现了接口的类生成代理，而不能针对类
+
+（2）CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法
+
+ 	cglib的几个重要方法：
+ 		生成代码继承自：MethodInterceptor
+
+ 		使用Enhancer 进行代理过程实现
+ 			1、setSuperclass代理的目标类
+ 			2、setCallback 配置拦截器实现内容
+ 				MethodInterceptor的intercept 方法中去实现增加或者拦截功能
+         
+         JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
+         
+         * 实现InvocationHandler
+         * 使用Proxy.newProxyInstance产生代理对象
+         * 被代理的对象必须要实现接口 CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理
+           在Hibernate中的拦截器其实现考虑到不需要其他接口的条件Hibernate中的相关代理采用的是CGLib来执行。
+         
+         jdk动态代理的内部实现：
+         https://blog.csdn.net/yhl_jxy/article/details/80586785
+         JDK动态代理基于拦截器和反射来实现。 JDK代理是不需要第三方库支持的，只需要JDK环境就可以进行代理，使用条件： 1）代理增强类，必须实现InvocationHandler接口；
+         2）被代理的对象，使用Proxy.newProxyInstance产生代理对象； 3）被代理的对象必须要实现接口； 关于Proxy.newProxyInstance的实现 newProxyInstance()方法帮我们执行了
+         生成代理类----获取构造器----生成代理对象 这三步； 生成代理类:Class<?> cl = getProxyClass0(loader, intfs);
+                         先从缓存中获取是否有已经生成的代理类
+                         ProxyClassFactory.apply()实现代理类创建。
+                             Class.forName
+                             byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
+                         defineClass0(loader, proxyName,
+                                             proxyClassFile, 0, proxyClassFile.length);
+                         generateProxyClass生成了字节码文件
+                     获取构造器: final Constructor<?> cons = cl.getConstructor(constructorParams); 生成代理对象: cons.newInstance(new
+         Object[]{h});
+
+##### Q1: Spring的事务是如何实现的
+
+##### A1:
+
             1、基于aop
             2、事务是基于连接的
-            
-           
-   
-   #####Q1: 线程池的配置参数和运行过程 如何留活 各个阻塞队列的锁及内部数据结构
-   #####A1: 
+
+            https://zhuanlan.zhihu.com/p/54067384
+
+##### Q1: 线程池的配置参数和运行过程 如何留活 各个阻塞队列的锁及内部数据结构
+
+##### A1:
+
             1、留活实现
             2、blockingqueue
                 a、ArrayListBlockingQueue
                 b、LinkedListBlockingQueue
                 c、SynircBlockingQueue
                 d、ArrayList
-   
-   #####Q1: 消息队列的比较，kafka如何实现高吞吐量
-   #####A1: 
+
+##### Q1: 消息队列的比较，kafka如何实现高吞吐量
+
+##### A1:
+
             1、顺序读写  
                 生产者生产的消息发送到kafka服务器会放到内存中 等一会儿在批量顺序写盘，顺序写 比较快
                 读的时候也是一块内存一下子读
@@ -106,10 +156,11 @@
             5、批量发送 
                 生产者可以按时或者按量 定时定量发送消息 减少阻塞
             6、kafka不保存消费状态，通过定义消费这的offset来确定消息消费情况
-            
-   
-   #####Q1: 解释explain执行结果如何解读
-   #####A1: 
+
+##### Q1: 解释explain执行结果如何解读
+
+##### A1:
+
             id、select_type、table、type、possible_keys、key、key_len、ref、rows、Extra
             id: 当包含自查询的时候会存在多条记录 id越大越先执行
             select_type:
@@ -151,10 +202,11 @@
                 Using join buffer：改值强调了在获取连接条件时没有使用索引，并且需要连接缓冲区来存储中间结果。如果出现了这个值，那应该注意，根据查询的具体情况可能需要添加索引来改进能。
                 Impossible where：这个值强调了where语句会导致没有符合条件的行。               
                 Select tables optimized away：这个值意味着仅通过使用索引，优化器可能仅从聚合函数结果中返回一行
-            
-               
-   #####Q1: Java中的锁有哪几种
-   #####A1: 
+
+##### Q1: Java中的锁有哪几种
+
+##### A1:
+
            公平锁/非公平锁
            可重入锁
            独享锁/共享锁

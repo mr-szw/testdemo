@@ -2,7 +2,7 @@ package com.dawei.test.demo.algorithm;
 
 import java.util.Arrays;
 
-import com.sun.istack.internal.NotNull;
+
 
 /**
  * @author by Dawei on 2019/2/15.
@@ -24,7 +24,7 @@ public class HeapSort {
 	 * @param parent 父节点
 	 * @param length 需要整理的数组长度
 	 */
-	private static void createHeap(int parent, @NotNull int[] array, int length) {
+	private static void createHeap(int parent, int[] array, int length) {
 
 		//父节点的值
 		int temp = array[parent];

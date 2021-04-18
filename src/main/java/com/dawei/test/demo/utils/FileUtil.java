@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,8 +34,6 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-
-import sun.misc.BASE64Encoder;
 
 public class FileUtil {
 
@@ -407,9 +407,12 @@ public class FileUtil {
 			int read = inputStream.read(data);
 			logger.warn("File available size is ={}", read);
 			// 对字节数组Base64编码
-			BASE64Encoder encoder = new BASE64Encoder();
+
+
+			Encoder encoder = Base64.getEncoder();
 			// 返回Base64编码过的字节数组字符串
-			return encoder.encode(data);
+
+			return encoder.encodeToString(data);
 		} catch (Throwable e) {
 			logger.error("Read image failed, ");
 		} finally {
