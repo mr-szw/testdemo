@@ -85,10 +85,33 @@ A2: https://blog.csdn.net/cpcpcp123/article/details/51260031
 3、如果目标对象没有实现了接口，必须采用CGLIB库，spring会自动在JDK动态代理和CGLIB之间转换
 
 （1）JDK动态代理只能对实现了接口的类生成代理，而不能针对类
+    
+    JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
+
+     * 实现InvocationHandler
+     * 使用Proxy.newProxyInstance产生代理对象
+     * 被代理的对象必须要实现接口 CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理
+       在Hibernate中的拦截器其实现考虑到不需要其他接口的条件Hibernate中的相关代理采用的是CGLib来执行。
+     
+     jdk动态代理的内部实现：
+     https://blog.csdn.net/yhl_jxy/article/details/80586785
+     JDK动态代理基于拦截器和反射来实现。 JDK代理是不需要第三方库支持的，只需要JDK环境就可以进行代理，使用条件： 1）代理增强类，必须实现InvocationHandler接口；
+     2）被代理的对象，使用Proxy.newProxyInstance产生代理对象； 3）被代理的对象必须要实现接口； 关于Proxy.newProxyInstance的实现 newProxyInstance()方法帮我们执行了
+     生成代理类----获取构造器----生成代理对象 这三步； 生成代理类:Class<?> cl = getProxyClass0(loader, intfs);
+                     先从缓存中获取是否有已经生成的代理类
+                     ProxyClassFactory.apply()实现代理类创建。
+                         Class.forName
+                         byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
+                     defineClass0(loader, proxyName,
+                                         proxyClassFile, 0, proxyClassFile.length);
+                     generateProxyClass生成了字节码文件
+                 获取构造器: final Constructor<?> cons = cl.getConstructor(constructorParams); 生成代理对象: cons.newInstance(new
+     Object[]{h});
 
 （2）CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法
 
  	cglib的几个重要方法：
+    https://blog.csdn.net/yhl_jxy/article/details/80633194
  		生成代码继承自：MethodInterceptor
 
  		使用Enhancer 进行代理过程实现
@@ -96,27 +119,7 @@ A2: https://blog.csdn.net/cpcpcp123/article/details/51260031
  			2、setCallback 配置拦截器实现内容
  				MethodInterceptor的intercept 方法中去实现增加或者拦截功能
          
-         JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
-         
-         * 实现InvocationHandler
-         * 使用Proxy.newProxyInstance产生代理对象
-         * 被代理的对象必须要实现接口 CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理
-           在Hibernate中的拦截器其实现考虑到不需要其他接口的条件Hibernate中的相关代理采用的是CGLib来执行。
-         
-         jdk动态代理的内部实现：
-         https://blog.csdn.net/yhl_jxy/article/details/80586785
-         JDK动态代理基于拦截器和反射来实现。 JDK代理是不需要第三方库支持的，只需要JDK环境就可以进行代理，使用条件： 1）代理增强类，必须实现InvocationHandler接口；
-         2）被代理的对象，使用Proxy.newProxyInstance产生代理对象； 3）被代理的对象必须要实现接口； 关于Proxy.newProxyInstance的实现 newProxyInstance()方法帮我们执行了
-         生成代理类----获取构造器----生成代理对象 这三步； 生成代理类:Class<?> cl = getProxyClass0(loader, intfs);
-                         先从缓存中获取是否有已经生成的代理类
-                         ProxyClassFactory.apply()实现代理类创建。
-                             Class.forName
-                             byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
-                         defineClass0(loader, proxyName,
-                                             proxyClassFile, 0, proxyClassFile.length);
-                         generateProxyClass生成了字节码文件
-                     获取构造器: final Constructor<?> cons = cl.getConstructor(constructorParams); 生成代理对象: cons.newInstance(new
-         Object[]{h});
+        
 
 ##### Q1: Spring的事务是如何实现的
 
