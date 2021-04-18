@@ -79,46 +79,57 @@ A2: https://blog.csdn.net/cpcpcp123/article/details/51260031
             2、cglib动态代理
             java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。
 
-而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理
+            而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理
+            
+            1、如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP 2、如果目标对象实现了接口，可以强制使用CGLIB实现AOP
+            3、如果目标对象没有实现了接口，必须采用CGLIB库，spring会自动在JDK动态代理和CGLIB之间转换
+            
+            （1）JDK动态代理只能对实现了接口的类生成代理，而不能针对类
+                
+                JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
+            
+                 * 实现InvocationHandler
+                 * 使用Proxy.newProxyInstance产生代理对象
+                 * 被代理的对象必须要实现接口 CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理
+                   在Hibernate中的拦截器其实现考虑到不需要其他接口的条件Hibernate中的相关代理采用的是CGLib来执行。
+                 
+                 jdk动态代理的内部实现：
+                 https://blog.csdn.net/yhl_jxy/article/details/80586785
+                 JDK动态代理基于拦截器和反射来实现。 JDK代理是不需要第三方库支持的，只需要JDK环境就可以进行代理，使用条件： 1）代理增强类，必须实现InvocationHandler接口；
+                 2）被代理的对象，使用Proxy.newProxyInstance产生代理对象； 3）被代理的对象必须要实现接口； 关于Proxy.newProxyInstance的实现 newProxyInstance()方法帮我们执行了
+                 生成代理类----获取构造器----生成代理对象 这三步； 生成代理类:Class<?> cl = getProxyClass0(loader, intfs);
+                                 先从缓存中获取是否有已经生成的代理类
+                                 ProxyClassFactory.apply()实现代理类创建。
+                                     Class.forName
+                                     byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
+                                 defineClass0(loader, proxyName,
+                                                     proxyClassFile, 0, proxyClassFile.length);
+                                 generateProxyClass生成了字节码文件
+                             获取构造器: final Constructor<?> cons = cl.getConstructor(constructorParams); 生成代理对象: cons.newInstance(new
+                 Object[]{h});
+            
+            （2）CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法
+            
+                cglib的几个重要方法：
+                https://blog.csdn.net/yhl_jxy/article/details/80633194
+                    生成代码继承自：MethodInterceptor
+            
+                    使用Enhancer 进行代理过程实现
+                        1、setSuperclass代理的目标类
+                        2、setCallback 配置拦截器实现内容
+                            MethodInterceptor的intercept 方法中去实现增加或者拦截功能
+            
+            JDK是基于反射机制,生成一个实现代理接口的匿名类,然后重写方法,实现方法的增强.
+            它生成类的速度很快,但是运行时因为是基于反射,调用后续的类操作会很慢.
+            而且他是只能针对接口编程的.
 
-1、如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP 2、如果目标对象实现了接口，可以强制使用CGLIB实现AOP
-3、如果目标对象没有实现了接口，必须采用CGLIB库，spring会自动在JDK动态代理和CGLIB之间转换
+            CGLIB是基于继承机制,继承被代理类,所以方法不要声明为final,然后重写父类方法达到增强了类的作用.
+            它底层是基于asm第三方框架,是对代理对象类的class文件加载进来,通过修改其字节码生成子类来处理.
+            生成类的速度慢,但是后续执行类的操作时候很快.
+            可以针对类和接口.
 
-（1）JDK动态代理只能对实现了接口的类生成代理，而不能针对类
-    
-    JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
-
-     * 实现InvocationHandler
-     * 使用Proxy.newProxyInstance产生代理对象
-     * 被代理的对象必须要实现接口 CGLib 必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法，是一种继承但是针对接口编程的环境下推荐使用JDK的代理
-       在Hibernate中的拦截器其实现考虑到不需要其他接口的条件Hibernate中的相关代理采用的是CGLib来执行。
-     
-     jdk动态代理的内部实现：
-     https://blog.csdn.net/yhl_jxy/article/details/80586785
-     JDK动态代理基于拦截器和反射来实现。 JDK代理是不需要第三方库支持的，只需要JDK环境就可以进行代理，使用条件： 1）代理增强类，必须实现InvocationHandler接口；
-     2）被代理的对象，使用Proxy.newProxyInstance产生代理对象； 3）被代理的对象必须要实现接口； 关于Proxy.newProxyInstance的实现 newProxyInstance()方法帮我们执行了
-     生成代理类----获取构造器----生成代理对象 这三步； 生成代理类:Class<?> cl = getProxyClass0(loader, intfs);
-                     先从缓存中获取是否有已经生成的代理类
-                     ProxyClassFactory.apply()实现代理类创建。
-                         Class.forName
-                         byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
-                     defineClass0(loader, proxyName,
-                                         proxyClassFile, 0, proxyClassFile.length);
-                     generateProxyClass生成了字节码文件
-                 获取构造器: final Constructor<?> cons = cl.getConstructor(constructorParams); 生成代理对象: cons.newInstance(new
-     Object[]{h});
-
-（2）CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法
-
- 	cglib的几个重要方法：
-    https://blog.csdn.net/yhl_jxy/article/details/80633194
- 		生成代码继承自：MethodInterceptor
-
- 		使用Enhancer 进行代理过程实现
- 			1、setSuperclass代理的目标类
- 			2、setCallback 配置拦截器实现内容
- 				MethodInterceptor的intercept 方法中去实现增加或者拦截功能
-         
+            因为jdk是基于反射,CGLIB是基于字节码.所以性能上会有差异.
+            在老版本CGLIB的速度是JDK速度的10倍左右,但是CGLIB启动类比JDK慢8倍左右,但是实际上JDK的速度在版本升级的时候每次都提高很多性能,而CGLIB仍止步不前.         
         
 
 ##### Q1: Spring的事务是如何实现的
