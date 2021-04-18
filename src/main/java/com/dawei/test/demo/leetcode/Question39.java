@@ -23,49 +23,44 @@ public class Question39 {
 
 	public static void main(String[] args) {
 
-		System.out.println(new Gson().toJson(new Question39().solveNQueens(5)));
-	}
-
-	public List<List<String>> solveNQueens(int n) {
-		int[] position = new int[]{2,  6, 7,  9, 10};
+		int[] position = new int[]{2, 3, 6, 7};
 		List<List<String>> result = new ArrayList<>();
-		System.out.println(new Gson().toJson(combinationSum(position, 14)));
-		return result;
-
+		System.out.println(new Gson().toJson(new Question39().combinationSum(position, 4)));
 	}
 
 	public List<List<Integer>> combinationSum(int[] candidates, int target) {
 		List<List<Integer>> result = new ArrayList<>();
 		Arrays.sort(candidates);
-		for (int i = 0; i < candidates.length; i++) {
-			Stack<Integer> subList = new Stack<>();
-			combinationSum(i, candidates, target, result, subList);
-		}
+		//for (int i = 0; i < candidates.length; i++) {
+		Stack<Integer> subList = new Stack<>();
+		combinationSum(0, candidates, target, result, subList);
+		//}
 		return result;
 	}
 
 	public void combinationSum(int start, int[] candidates, int target, List<List<Integer>> result, Stack<Integer> subList) {
+
 		for (int i = start; i < candidates.length; i++) {
+			if (target < 0) {
+				return;
+			}
 			int candidate = candidates[i];
 			if (candidate == target) {
 				subList.push(candidate);
 				result.add(new ArrayList<>(subList));
 				subList.pop();
-				break;
+				return;
 			} else if (candidate > target) {
-				if (subList.empty()) {
-					return;
-				}
-				//回退
-				target = target + subList.pop();
-				combinationSum(i + 1, candidates, target, result, subList);
+				break;
 			} else {
 				//继续
 				subList.push(candidate);
-				combinationSum(i + 1, candidates, target - candidate, result, subList);
+				System.out.println("push >> " + candidate);
+				combinationSum(i, candidates, target - candidate, result, subList);
+				Integer pop = subList.pop();
+				System.out.println("pop >> " + pop);
+				//break;
 			}
 		}
-
-
 	}
 }

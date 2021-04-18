@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -32,12 +33,15 @@ import org.junit.Test;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import com.dawei.test.demo.down.DownStrategyConfig;
 import com.dawei.test.demo.future.ExecutorApi;
 import com.dawei.test.demo.pojo.BoardMoreConfigVo;
 import com.dawei.test.demo.pojo.DemoPojo;
+import com.dawei.test.demo.pojo.DemoPojoSub;
 import com.dawei.test.demo.pojo.ResultDto;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
@@ -52,10 +56,8 @@ public class DemoTestMain implements Cloneable {
 	private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
 
 
-
-
 	public static String appendNativeH5Path(String h5UrlPath, String nativeUrlPath,
-									 @Nonnull Object... params) throws Exception {
+											@Nonnull Object... params) throws Exception {
 		// mio://urlPath&param=18771603&fallback_url=
 		//
 		// encode(mibrowser://home?web_url=
@@ -79,7 +81,21 @@ public class DemoTestMain implements Cloneable {
 	//MCC 使用的ref
 	public static final String MCC_REF = "newhome&preventBack=true";
 
-	public static void main(String[] args)throws Throwable{
+	public static void main(String[] args) throws Throwable {
+
+		DemoPojoSub demoPojoSub = new DemoPojoSub();
+		demoPojoSub.setTest(1);
+		demoPojoSub.setTest2(2);
+
+		ResultDto<? extends ResultDto<? extends DemoPojo>> resultDto = new ResultDto<>();
+		ResultDto<ResultDto<DemoPojoSub>> pojoSubResultDto = new ResultDto<>();
+		resultDto = pojoSubResultDto;
+
+		DemoPojo demoPojo = demoPojoSub;
+		demoPojo.setName("F");
+
+		DemoPojoSub demoPojoSub2 = (DemoPojoSub) demoPojo;
+
 
 		System.out.println(tableSizeFor(4));
 
@@ -90,7 +106,6 @@ public class DemoTestMain implements Cloneable {
 		boolean addSuccess = true;
 
 		//Assert.assertTrue("Resource must by only, =", !addSuccess );
-
 
 
 		long startTime = 0L;
@@ -124,7 +139,6 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
 //	public static void appendNativeH5Path(String nativeUrlPath, @Nonnull Object... params) throws Exception {
 //		String fallBackUrl = "mio://urlPath&param=18771603&fallback_url=";
 //
@@ -133,7 +147,7 @@ public class DemoTestMain implements Cloneable {
 //		System.out.println(Arrays.toString(objects));
 //	}
 
-		@Test
+	@Test
 	public void testMethod() throws Throwable {
 
 		String test = "abc#";
@@ -262,7 +276,28 @@ public class DemoTestMain implements Cloneable {
 		System.out.println("Wait stop ");
 	}
 
+	@Test
+	public void testGson()   {
+		List<DemoPojo> demoPojoList = new ArrayList<>();
+		DemoPojo demoPojo = new DemoPojo();
+		demoPojo.setName("大伟");
+		demoPojo.setBirthday(new Date());
+		List<String> testList = new ArrayList<>();
+		testList.add("23");
+		testList.add("4535463erg");
+		demoPojo.setPathList(testList);
+		demoPojoList.add(demoPojo);
 
+		Gson gson = new Gson();
+		String toJson = gson.toJson(demoPojoList);
+
+
+		List<DemoPojo> demoPojoListResult = gson.fromJson(toJson, new TypeToken<List<DemoPojo>>() {
+		}.getType());
+
+
+		System.out.println(demoPojoListResult);
+	}
 
 
 
@@ -316,7 +351,6 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
 	@Test
 	public void testThreadParam() {
 
@@ -338,7 +372,6 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
 	public void cycleTurn(long start, long stop) {
 
 		try {
@@ -350,10 +383,9 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
-
 	static final int MAXIMUM_CAPACITY = 1 << 30;
-	static  int tableSizeFor(int cap) {
+
+	static int tableSizeFor(int cap) {
 		int n = cap - 1;
 		n |= n >>> 1;
 		n |= n >>> 2;
@@ -362,7 +394,6 @@ public class DemoTestMain implements Cloneable {
 		n |= n >>> 16;
 		return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 	}
-
 
 
 	public static HashSet<String> getSplitSet(String element) {
@@ -423,7 +454,6 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
 	/**
 	 * 向圈子的tag 中追加单个tag
 	 */
@@ -456,9 +486,22 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
 	@Test
 	public void testAddTags() {
+
+		int i = 1;
+		i = i++; //2
+
+		int j = i++; //i= 3 j= 3
+
+		// k = 3 + 4 * 4 = 19
+		// i = 5
+		int k = i + ++i * i++;
+
+		System.out.println(i);
+		System.out.println(j);
+		System.out.println(k);
+
 
 		System.out.println(appendTags("1", "2,3,4,5".split(",")));
 
@@ -466,28 +509,17 @@ public class DemoTestMain implements Cloneable {
 	}
 
 
-
-
-
-
-
-
-
-
 	private String test1() {
 		return "a";
 	}
 
 
-	public String testThrowable()  throws Throwable {
+	public String testThrowable() throws Throwable {
 
 		throw new Throwable();
 
 
-
-
 	}
-
 
 
 	private Integer test2() {
@@ -497,7 +529,6 @@ public class DemoTestMain implements Cloneable {
 	private List<String> test3() {
 		return Lists.newArrayList("1", "4");
 	}
-
 
 
 	class TryUtil implements ExecutorApi<String> {
@@ -513,15 +544,76 @@ public class DemoTestMain implements Cloneable {
 		}
 	}
 
+	@Test
+	public void testMethodTe() {
+		System.out.println(method2(5, 3, 2));
+
+		int[] score = new int[]{5, 5, 5, 4, 5, 5, 5, 5};
+		//method(8, 2, 5, score);
+	}
+
+	//n 商品  m 需要  k 总量 score 商品分
+//	public static int method(int n, int m, int k, int[] score) {
+//
+//		if (n < m) {
+//			return 0;
+//		}
+//		int sum = 0;
+//		int i = 0;
+//		int result = 0;
+//		for (; i < m; i++) {
+//			sum = sum + score[i];
+//		}
+//		if (sum >= k) {
+//			result++;
+//		}
+//		while (i < n) {
+//			sum = sum + score[i] - score[i - m];
+//			if (sum >= k) {
+//				result++;
+//			}
+//			i++;
+//		}
+//		return result;
+//	}
 
 
+	static int resultNum = 0;
 
 
+	//结果  target   k 最大值  d 需要存在最大值 的最小值
+	public static int method2(int target, int k, int d) {
+		Stack<Integer> subResultList = new Stack<>();
+		List<List<Integer>> resultList = new ArrayList<>();
+		for (int i = d; i <= k; i++) {
+			subResultList.push(i);
+			if (target - i == 0) {
+				resultList.add(new ArrayList<>(subResultList));
+			}
 
+			methodNext(resultList, subResultList, target - i, k);
+			subResultList.pop();
+		}
 
+		return resultList.size() * 2 % 998244353;
+	}
 
-
-
+	public static void methodNext(List<List<Integer>> resultList, Stack<Integer> subResultList, int target, int k) {
+		if (target == 0) {
+			if (!resultList.contains(subResultList)) {
+				resultList.add(new ArrayList<>(subResultList));
+			}
+			return;
+		}
+		if (target < 0) {
+			return;
+		}
+		for (int i = 1; i <= k; i++) {
+			subResultList.push(i);
+			methodNext(resultList, subResultList, target - i, k);
+			subResultList.pop();
+		}
+	}
 
 
 

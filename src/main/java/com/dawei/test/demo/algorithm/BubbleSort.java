@@ -12,7 +12,6 @@ import org.junit.Test;
  */
 public class BubbleSort {
 
-
     /**
      * 冒泡排序
      *
@@ -34,9 +33,7 @@ public class BubbleSort {
     @Test
     public void test() {
         // 初始化一个序列
-        int[] array = {
-                1, 3, 4, 5, 2, 6, 9, 7, 8, 0
-        };
+        int[] array = {1, 3, 4, 5, 2, 6, 9, 7, 8, 0};
 
         System.out.print("排序前:\t");
         System.out.println(Arrays.toString(array));
@@ -58,18 +55,18 @@ public class BubbleSort {
         int numIndex = length - 1;
 
         int next = 0;
-        while(otherIndex >= 0 && numIndex >=0) {
+        while (otherIndex >= 0 && numIndex >= 0) {
             int result = A[numIndex--] + (other.charAt(otherIndex--) - '0') + next;
             next = result / 10;
-            result = result -  next * 10;
+            result = result - next * 10;
             resultList.add(result);
 
 
         }
-        while(numIndex >=0) {
+        while (numIndex >= 0) {
             resultList.add(A[numIndex--]);
         }
-        while(otherIndex >=0) {
+        while (otherIndex >= 0) {
             resultList.add((other.charAt(numIndex--) - '0'));
         }
         Collections.reverse(resultList);

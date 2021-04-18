@@ -1,11 +1,24 @@
 package com.dawei.test.demo.leetcode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * https://leetcode-cn.com/problems/permutations/
  * 全排列 数组中没有重复元素
+=======
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+/**
+ * https://leetcode-cn.com/problems/permutations/ 全排列 数组中没有重复元素
+ * 
+>>>>>>> dev
  * @author sinbad on 2020/08/30.
  */
 public class Question46 {
@@ -14,39 +27,43 @@ public class Question46 {
 
 	public static void main(String[] args) {
 
-		System.out.println(new Question46().permute(new int[]{}));
 	}
 
-	public List<List<Integer>> permute(int[] nums) {
 
-		int num = 3;
-		boolean[] usedMark = new boolean[num];
+
+
+
+	public List<List<Integer>> permute3(int[] nums) {
+
+		Map<Integer, Boolean> usedMarkMap = new HashMap<>(nums.length);
 		List<List<Integer>> resultList = new ArrayList<>();
-		List<Integer> pathList = new ArrayList<>();
-		List<List<Integer>> permute = permute(resultList, pathList, num, 0, usedMark);
+
+		Stack<Integer> pathList = new Stack<>();
+		permute(resultList, pathList, nums, usedMarkMap);
 
 		return resultList;
 
 	}
 
+	// 常规操作
+	public void permute(List<List<Integer>> resultList, Stack<Integer> pathList, int[] nums,
+			Map<Integer, Boolean> usedMarkMap) {
 
-
-	//常规操作
-	public List<List<Integer>> permute(List<List<Integer>> resultList, List<Integer> pathList, int len, int startIndex, boolean[] usedMark) {
-
-		if (startIndex == len) {
-			 resultList.add(new ArrayList<>(pathList));
-			return resultList;
+		int length = nums.length;
+		if (pathList.size() == length) {
+			resultList.add(new ArrayList<>(pathList));
+			return;
 		}
-		for(int i = startIndex; i < len; i++) {
-			if (!usedMark[startIndex]) {
-				usedMark[startIndex] = true;
-				pathList.add(i);
-
-				return permute(resultList, pathList, startIndex + 1,len, usedMark);
+		for (int i = 0; i < length; i++) {
+			int num = nums[i];
+			if (usedMarkMap.get(num) == null || !usedMarkMap.get(num)) {
+				pathList.add(num);
+				usedMarkMap.put(num, true);
+				permute(resultList, pathList, nums, usedMarkMap);
+				usedMarkMap.put(num, false);
+				pathList.pop();
 			}
 		}
 
-		return resultList;
 	}
 }
