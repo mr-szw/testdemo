@@ -1,6 +1,7 @@
 package com.dawei.test.demo.leetcode;
 
 public class ListNode {
+<<<<<<< HEAD
 	int val;
 	ListNode next;
 
@@ -22,3 +23,9 @@ public class ListNode {
 				'}';
 	}
 }
+=======
+     int val;
+     ListNode next;
+     ListNode(int x) { val = x; }
+ }
+>>>>>>> test-dev
