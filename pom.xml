@@ -141,12 +141,12 @@
 			<version>2.10.4</version>
 		</dependency>
 
-		<!-- javax.jms/jms -->
-		<dependency>
-			<groupId>javax.jms</groupId>
-			<artifactId>jms</artifactId>
-			<version>1.1</version>
-		</dependency>
+<!--		&lt;!&ndash; javax.jms/jms &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>javax.jms</groupId>-->
+<!--			<artifactId>jms</artifactId>-->
+<!--			<version>1.1</version>-->
+<!--		</dependency>-->
 
 		<!-- activemq-core -->
 		<dependency>
@@ -160,7 +160,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->

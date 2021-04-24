@@ -1,11 +1,7 @@
 package com.dawei.test.demo.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * 第k个排列
- * https://leetcode-cn.com/problems/permutation-sequence/
+ * https://leetcode-cn.com/problems/longest-mountain-in-array/
  *
  * @author sinbad on 2020/08/19.
  */
@@ -13,41 +9,32 @@ public class Question845 {
 
 
 	public static void main(String[] args) {
-
-		System.out.println(new Question845().longestMountain(new int[]{}));
+		System.out.println(new Question845().longestMountain(new int[]{2, 1, 4, 7, 3, 2, 5}));
 	}
 
 
-	public int longestMountain(int[] A) {
-
-		int leftPoint = -1;
-
-		int leftValue = -1;
-		int rightValue = -1;
-		int rightPoint = 0;
-
-		boolean findRight = false;
-		int lastNum = A[0];
-
-		for (int i = 1; i < A.length; i++) {
-
-			int currentNum = A[i];
-			if (!findRight) {
-				if (lastNum >= currentNum) {
-					leftValue = currentNum;
-					leftPoint = i;
-					findRight = true;
-				} else {
-					continue;
+	public int longestMountain(int[] arr) {
+		int start = -1;
+		int max = 0;
+		int length = arr.length;
+		for (int i = 1; i < length; i++) {
+			//上升
+			if (arr[i-1] < arr[i]) {
+				//初始位置或者 上升山脉的起点
+				if (i == 1 || arr[i-2] >= arr[i -1]) {
+					start = i -1;
+				}
+			} else if (arr[i-1] > arr[i]) {
+				//记录过开始值
+				if (start >= 0) {
+					max = Math.max(max, i - start + 1);
 				}
 			} else {
-				rightValue = currentNum;
-				rightPoint = i;
+				//平坦时重置
+				start = -1;
 			}
 		}
-		return rightPoint - rightPoint;
-
+		return max;
 	}
-
 
 }

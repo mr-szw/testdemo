@@ -15,17 +15,13 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.util.CollectionUtils;
 
-import com.alibaba.dubbo.common.json.JSON;
 import com.dawei.test.demo.utils.GsonUtil;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
