@@ -17,20 +17,20 @@ import lombok.Data;
 public class DemoPojo implements Serializable {
 
 
-    private Long id;
-    private String name = "我是爹";
-    private Date birthday;
+	private Long id;
+	private String name = "我是爹";
+	private Date birthday;
 
-    private int test;
+	private int test;
 
-    private List<String> pathList;
+	private List<String> pathList;
 
 
-    public static void main(String[] args) {
-        List<DemoPojo> list = new ArrayList<>();
-        list.add(new DemoPojoSub());
-        list.add(new DemoPojoSub2());
+	public static void main(String[] args) {
+		List<DemoPojo> list = new ArrayList<>();
+		list.add(new DemoPojoSub());
+		list.add(new DemoPojoSub2());
 
-        System.out.println(GsonUtil.toJson(list));
-    }
+		System.out.println(GsonUtil.toJson(list));
+	}
 }

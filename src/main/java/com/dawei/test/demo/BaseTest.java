@@ -1,6 +1,10 @@
 package com.dawei.test.demo;
 
+import com.dawei.test.demo.pojo.DemoPojo;
+import com.dawei.test.demo.utils.GsonUtil;
+
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,15 +12,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.dawei.test.demo.pojo.DemoPojo;
-import com.dawei.test.demo.utils.GsonUtil;
-
 
 public class BaseTest {
 
 	public static void main(String[] args) {
 		HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
-		objectObjectHashMap.keySet().iterator().next();
 
 		try {
 
@@ -41,14 +41,24 @@ public class BaseTest {
 		DemoPojo demoPojo = new DemoPojo();
 		demoPojo.setId(1L);
 		demoPojo.setName("A");
+
 		DemoPojo demoPojo1 = new DemoPojo();
-		DemoPojo demoPojo2 = new DemoPojo();
-		DemoPojo demoPojo3 = null;
+
+
 		demoPojo1.setId(22L);
 		demoPojo1.setName("C");
-		demoPojo2.setId(1L);
+
+		DemoPojo demoPojo2 = new DemoPojo();
+		demoPojo2.setId(13L);
 		demoPojo2.setName("B");
+		DemoPojo demoPojo3 = new DemoPojo();
 		List<DemoPojo> demoPojos = Arrays.asList(demoPojo, demoPojo1, demoPojo2, demoPojo3);
+		demoPojo3.setId(10L);
+		demoPojos.sort(Comparator.comparing(DemoPojo::getId));
+		List<DemoPojo> collect1 = demoPojos.stream().sorted(Comparator.comparing(DemoPojo::getId) ).collect(Collectors.toList());
+
+		//Collections.sort(demoPojos,  );
+		System.out.println(GsonUtil.toJson(demoPojos));
 
 		List<DemoPojo> collect = demoPojos.stream().filter(Objects::isNull).collect(Collectors.toList());
 //		Map<Long, List<String>> userJoinPostList = demoPojos.stream()
